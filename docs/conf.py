@@ -9,11 +9,10 @@ extensions = []
 templates_path = ['_templates']
 source_suffix = '.rst'
 master_doc = 'index'
-project = u'String'
+project = u'Str'
 copyright = u'2015, Michael Scribellito'
-version = '1.0'
-html_title = "String Documentation"
-html_short_title = "String"
+html_title = "Str Documentation"
+html_short_title = "Str"
 
 exclude_patterns = ['_build']
 html_static_path = ['_static']

@@ -11,13 +11,6 @@ Requirements
 Installation
 ------------
 
-Via `Composer <http://getcomposer.org>`_
-````````````````````````````````````````
-
-.. code-block:: bash
-
-    composer require str/str
-
 Via `require <http://php.net/manual/en/function.require.php>`_
 ``````````````````````````````````````````````````````````````
 

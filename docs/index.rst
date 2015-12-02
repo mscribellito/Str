@@ -1,9 +1,9 @@
 .. title:: String, PHP string class/library
 
-String Documentation
-====================
+Str Documentation
+=================
 
-String is a PHP class that wraps the native string functions in an effort to simplify string handling and manipulation. String provides methods for examining individual characters of the string, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. A String is immutable (constant) and its value cannot be changed after creation.
+Str is a PHP class that wraps the native string functions in an effort to simplify string handling and manipulation. Str provides methods for examining individual characters of the string, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. A Str is immutable (constant) and its value cannot be changed after creation.
 
 .. code-block:: php
 

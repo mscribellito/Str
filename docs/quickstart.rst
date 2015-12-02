@@ -1,8 +1,8 @@
 Quick Start
 ===========
 
-This page provides a quick introduction to String and some introductory examples. 
-If you have not already installed, String, head over to the :ref:`installation` page.
+This page provides a quick introduction to Str and some introductory examples. 
+If you have not already installed, Str, head over to the :ref:`installation` page.
 
 Creating Strings
 ----------------

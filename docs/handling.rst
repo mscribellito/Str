@@ -1,7 +1,7 @@
 Handling
 ========
 
-The String class has several methods for comparing strings and portions of strings.
+The Str class has several methods for comparing strings and portions of strings.
 
 compareTo
 ---------

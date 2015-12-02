@@ -1,7 +1,7 @@
 Manipulation
 ============
 
-The String class has several methods for examining the contents of strings, finding 
+The Str class has several methods for examining the contents of strings, finding 
 characters or substrings within a string, changing case and other tasks.
 
 charAt

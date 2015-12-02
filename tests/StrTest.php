@@ -1,9 +1,8 @@
 <?php
 
-require __DIR__ . "/../src/Str.php";
+namespace Str;
 
-use Str\Str;
-use Str\StrIndexOutOfBoundsException;
+require __DIR__ . "/../src/Str.php";
 
 function Str($str) {
 
@@ -11,239 +10,241 @@ function Str($str) {
 
 }
 
-class StrTest extends PHPUnit_Framework_TestCase {
+class StrTest extends \PHPUnit_Framework_TestCase {
 
     public function testConstructor() {
 
-        $str1 = new Str("Hello, world.");
+        $pepperoniPizza = new Str("pepperoni pizza");
+        $this->assertInstanceOf("Str\Str", $pepperoniPizza);
 
-        $this->assertEquals($str1, "Hello, world.");
+        $cheesePizza = new Str(" cheese pizza ", 1, 12);
+        $this->assertInstanceOf("Str\Str", $cheesePizza);
 
-        $str2 = new Str("asdf", 1, 2);
-
-        $this->assertEquals($str2, "sd");
+        $this->setExpectedException("Str\StrIndexOutOfBoundsException");
+        new Str("hawaiian pizza", -1, 0);
+        new Str("anchovy pizza", 0, -1);
+        new Str("spam pizza", 11, 0);
 
     }
 
     public function testToString() {
 
-        $str = new Str("asdf");
-
-        $this->assertEquals($str, "asdf");
+        $pizza = new Str("pizza");
+        $this->assertEquals("pizza", $pizza);
 
     }
 
     public function testCharAt() {
 
-        $str = new Str("Hello, world.");
+        $pizza = new Str("pizza");
 
-        $this->assertEquals($str->charAt(0), "H");
-        $this->assertNotEquals($str->charAt(5), " ");
-        $this->assertEquals($str->charAt($str->length() - 1), ".");
+        $this->assertEquals("p", $pizza->charAt(0));
+        $this->assertNotEquals("Z", $pizza->charAt(2));
+        $this->assertEquals("a", $pizza->charAt($pizza->length() - 1));
 
-        try {
-            $str->charAt(-1);
-        }
-        catch (StrIndexOutOfBoundsException $ex1) {
-            $this->assertEquals(get_class($ex1), 'Str\StrIndexOutOfBoundsException');
-        }
-
-        try {
-            $str->charAt($str->length());
-        }
-        catch (StrIndexOutOfBoundsException $ex2) {
-            $this->assertEquals(get_class($ex2), 'Str\StrIndexOutOfBoundsException');
-        }
+        $this->setExpectedException("Str\StrIndexOutOfBoundsException");
+        $pizza->charAt(-1);
+        $pizza->charAt($pizza->length());
 
     }
 
     public function testCharCodeAt() {
 
-        $str = new Str("Hello, world.");
+        $pizza = new Str("pizza");
 
-        $this->assertEquals($str->charCodeAt(0), ord("H"));
-        $this->assertNotEquals($str->charCodeAt(5), ord(" "));
-        $this->assertEquals($str->charCodeAt($str->length() - 1), ord("."));
+        $this->assertEquals(ord("p"), $pizza->charCodeAt(0));
+        $this->assertNotEquals(ord("Z"), $pizza->charCodeAt(2));
+        $this->assertEquals(ord("a"), $pizza->charCodeAt($pizza->length() - 1));
 
-        try {
-            $str->charCodeAt(-1);
-        }
-        catch (StrIndexOutOfBoundsException $ex1) {
-            $this->assertEquals(get_class($ex1), 'Str\StrIndexOutOfBoundsException');
-        }
-
-        try {
-            $str->charCodeAt($str->length());
-        }
-        catch (StrIndexOutOfBoundsException $ex2) {
-            $this->assertEquals(get_class($ex2), 'Str\StrIndexOutOfBoundsException');
-        }
+        $this->setExpectedException("Str\StrIndexOutOfBoundsException");
+        $pizza->charCodeAt(-1);
+        $pizza->charCodeAt($pizza->length());
 
     }
 
     public function testCompareTo() {
 
-        $str1 = new Str("Apple");
-        $str2 = new Str("Banana");
-        $str3 = new Str("Cherry");
+        $pepperoniPizza = new Str("pepperoni");
+        $cheesePizza = new Str("cheese");
+        $bananaPepperPizza = new Str("banana pepper");
 
-        $this->assertLessThanOrEqual(-1, $str1->compareTo($str2));
-        $this->assertLessThanOrEqual(-1, $str2->compareTo($str3));
-        $this->assertEquals(0, $str1->compareTo($str1));
-        $this->assertEquals(0, $str2->compareTo("Banana"));
-        $this->assertEquals(0, $str3->compareTo($str3));
-        $this->assertGreaterThanOrEqual(1, $str2->compareTo($str1));
-        $this->assertGreaterThanOrEqual(1, $str3->compareTo($str2));
+        $this->assertGreaterThanOrEqual(1, $pepperoniPizza->compareTo($cheesePizza));
+        $this->assertGreaterThanOrEqual(1, $pepperoniPizza->compareTo($bananaPepperPizza));
+        $this->assertGreaterThanOrEqual(1, $cheesePizza->compareTo($bananaPepperPizza));
 
-        $str4 = new Str("1234");
-        $this->assertEquals(0, $str4->compareTo(1234));
+        $this->assertLessThanOrEqual(-1, $cheesePizza->compareTo($pepperoniPizza));
+        $this->assertLessThanOrEqual(-1, $bananaPepperPizza->compareTo($pepperoniPizza));
+        $this->assertLessThanOrEqual(-1, $bananaPepperPizza->compareTo($cheesePizza));
+
+        $this->assertEquals(0, $pepperoniPizza->compareTo("pepperoni"));
+        $this->assertEquals(0, $pepperoniPizza->compareTo($pepperoniPizza));
+
+        $this->assertEquals(0, $cheesePizza->compareTo("cheese"));
+        $this->assertEquals(0, $cheesePizza->compareTo($cheesePizza));
+
+        $this->assertEquals(0, $bananaPepperPizza->compareTo("banana pepper"));
+        $this->assertEquals(0, $bananaPepperPizza->compareTo($bananaPepperPizza));
+
+        $str = new Str("1234");
+        $this->assertEquals(0, $str->compareTo(1234));
 
     }
 
     public function testCompareToIgnoreCase() {
 
-        $str1 = new Str("apple");
-        $str2 = new Str("APPLE");
-        $str3 = new Str("banana");
-        $str4 = new Str("BANANA");
+        $smallPepperoniPizza = new Str("pepperoni");
+        $largePepperoniPizza = new Str("PEPPERONI");
+        $smallCheesePizza = new Str("cheese");
+        $largeCheesePizza = new Str("CHEESE");
 
-        $this->assertLessThanOrEqual(-1, $str1->compareToIgnoreCase($str3));
-        $this->assertLessThanOrEqual(-1, $str2->compareToIgnoreCase($str4));
-        $this->assertEquals(0, $str1->compareToIgnoreCase($str2));
-        $this->assertEquals(0, $str3->compareToIgnoreCase($str4));
-        $this->assertGreaterThanOrEqual(1, $str4->compareToIgnoreCase($str1));
-        $this->assertGreaterThanOrEqual(1, $str4->compareToIgnoreCase($str2));
+        $this->assertGreaterThanOrEqual(1, $smallPepperoniPizza->compareToIgnoreCase($largeCheesePizza));
+        $this->assertGreaterThanOrEqual(1, $largePepperoniPizza->compareToIgnoreCase($smallCheesePizza));
 
-        $str5 = new Str("1234");
-        $this->assertEquals(0, $str5->compareTo(1234));
+        $this->assertLessThanOrEqual(-1, $smallCheesePizza->compareToIgnoreCase($smallPepperoniPizza));
+        $this->assertLessThanOrEqual(-1, $largeCheesePizza->compareToIgnoreCase($largePepperoniPizza));
+
+        $this->assertEquals(0, $smallPepperoniPizza->compareToIgnoreCase($largePepperoniPizza));
+        $this->assertEquals(0, $smallPepperoniPizza->compareToIgnoreCase("PEPPERONI"));
+        $this->assertEquals(0, $largePepperoniPizza->compareToIgnoreCase("pepperoni"));
+
+        $this->assertEquals(0, $smallCheesePizza->compareToIgnoreCase($largeCheesePizza));
+        $this->assertEquals(0, $smallCheesePizza->compareToIgnoreCase("CHEESE"));
+        $this->assertEquals(0, $largeCheesePizza->compareToIgnoreCase("cheese"));
+
+        $str = new Str("1234");
+        $this->assertEquals(0, $str->compareToIgnoreCase(1234));
 
     }
 
     public function testConcat() {
 
-        $str1 = new Str("Hello, ");
-        $str2 = new Str("world.");
+        $pepperoni = new Str("pepperoni");
+        $pizza = new Str("pizza");
 
-        $this->assertTrue($str1->concat($str2)->equals("Hello, world."));
-
-        $digits = new Str();
-        foreach (range(0, 9) as $n) {
-            $digits = $digits->concat($n);
-        }
-
-        $this->assertTrue($digits->equals("0123456789"));
+        $this->assertEquals("pepperoni pizza", $pepperoni->concat(" ")->concat($pizza));
 
     }
 
     public function testContains() {
 
-        $str = new Str("Hello, world.");
+        $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->assertTrue($str->contains("Hello,"));
-        $this->assertFalse($str->contains(" WORLD."));
+        $this->assertTrue($pepperoniPizza->contains("pepperoni"));
+        $this->assertFalse($pepperoniPizza->contains("anchovies"));
 
     }
 
     public function testEndsWith() {
 
-        $str = new Str("Hello, world.");
+        $pizza = new Str("pizza");
 
-        $this->assertTrue($str->endsWith("."));
-        $this->assertTrue($str->endsWith("world."));
-        $this->assertTrue($str->endsWith("LD.", true));
-        $this->assertFalse($str->endsWith("H"));
-        $this->assertFalse($str->endsWith("Hello,"));
-        $this->assertFalse($str->endsWith("HE"));
+        $this->assertTrue($pizza->endsWith("a"));
+        $this->assertTrue($pizza->endsWith("za"));
+        $this->assertTrue($pizza->endsWith("A", true));
+        $this->assertFalse($pizza->endsWith("p"));
+        $this->assertFalse($pizza->endsWith("pi"));
+        $this->assertFalse($pizza->endsWith("PI"));
 
     }
 
     public function testEquals() {
 
-        $str1 = new Str("Hello, world.");
-        $str2 = new Str("HELLO, WORLD.");
-        $str3 = new Str("HELLO, WORLD.");
+        $smallPizza = new Str("pizza");
+        $largePizza = new Str("PIZZA");
 
-        $this->assertTrue($str1->equals($str1));
-        $this->assertFalse($str1->equals($str2));
-        $this->assertTrue($str2->equals($str3));
+        $this->assertTrue($smallPizza->equals($smallPizza));
+        $this->assertTrue($smallPizza->equals("pizza"));
 
-        $str4 = new Str("1234");
+        $this->assertFalse($smallPizza->equals($largePizza));
+        $this->assertFalse($largePizza->equals($smallPizza));
 
-        $this->assertTrue($str4->equals(1234));
+        $this->assertTrue($largePizza->equals($largePizza));
+        $this->assertTrue($largePizza->equals("PIZZA"));
 
-        $this->assertTrue($str1->equalsIgnoreCase(new Str("HELLO, WORLD.")));
-        $this->assertTrue($str2->equalsIgnoreCase(new Str("Hello, world.")));
+        $str = new Str("1234");
+
+        $this->assertTrue($str->equals(1234));
 
     }
 
     public function testEqualsIgnoreCase() {
 
-        $str1 = new Str("Hello, world.");
-        $str2 = new Str("HELLO, WORLD.");
+        $smallPizza = new Str("pizza");
+        $largePizza = new Str("PIZZA");
 
-        $this->assertTrue($str1->equalsIgnoreCase($str1));
+        $this->assertTrue($smallPizza->equals($smallPizza));
+        $this->assertTrue($smallPizza->equalsIgnoreCase("PIZZA"));
 
-        $str3 = new Str("ABCD");
+        $this->assertTrue($smallPizza->equalsIgnoreCase($largePizza));
+        $this->assertTrue($largePizza->equalsIgnoreCase($smallPizza));
 
-        $this->assertTrue($str3->equalsIgnoreCase("abcd"));
+        $this->assertTrue($largePizza->equals($largePizza));
+        $this->assertTrue($largePizza->equalsIgnoreCase("pizza"));
 
-        $str4 = new Str("1234");
+        $str = new Str("1234");
 
-        $this->assertTrue($str4->equalsIgnoreCase(1234));
+        $this->assertTrue($str->equalsIgnoreCase(1234));
 
     }
 
     public function testFormat() {
 
-        $str = Str::format("%s, %s.", "Hello", "world");
+        $pepperoniPizza = Str::format("%s %s", "pepperoni", "pizza");
 
-        $this->assertTrue($str->equals("Hello, world."));
+        $this->assertTrue($pepperoniPizza->equals("pepperoni pizza"));
 
     }
 
     public function testIndexOf() {
 
-        $str = new Str("Hello, world.");
+        $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->assertEquals($str->indexOf("H"), 0);
-        $this->assertEquals($str->indexOf("."), 12);
-        $this->assertNotEquals($str->indexOf(" "), 5);
-        $this->assertEquals($str->indexOf("x"), -1);
+        $this->assertEquals(0, $pepperoniPizza->indexOf("p"));
+        $this->assertEquals(2, $pepperoniPizza->indexOf("p", 1));
+        $this->assertEquals(1, $pepperoniPizza->indexOf("e"));
+        $this->assertEquals(4, $pepperoniPizza->indexOf("e", 2));
+        $this->assertEquals(9, $pepperoniPizza->indexOf(" "));
+        $this->assertEquals(5, $pepperoniPizza->indexOf("r"));
+
+        $this->assertEquals(0, $pepperoniPizza->indexOf("p", -1));
+        $this->assertEquals(-1, $pepperoniPizza->indexOf("p", $pepperoniPizza->length()));
 
     }
 
     public function testIndexOfIgnoreCase() {
 
-        $str = new Str("Hello, world.");
+        $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->assertEquals($str->indexOfIgnoreCase("h"), 0);
-        $this->assertEquals($str->indexOfIgnoreCase("D"), 11);
-        $this->assertEquals($str->indexOfIgnoreCase("x"), -1);
+        $this->assertEquals(0, $pepperoniPizza->indexOfIgnoreCase("P"));
+        $this->assertEquals(2, $pepperoniPizza->indexOfIgnoreCase("P", 1));
+        $this->assertEquals(1, $pepperoniPizza->indexOfIgnoreCase("E"));
+        $this->assertEquals(4, $pepperoniPizza->indexOfIgnoreCase("E", 2));
+        $this->assertEquals(9, $pepperoniPizza->indexOfIgnoreCase(" "));
+        $this->assertEquals(5, $pepperoniPizza->indexOfIgnoreCase("R"));
+
+        $this->assertEquals(0, $pepperoniPizza->indexOfIgnoreCase("P", -1));
+        $this->assertEquals(-1, $pepperoniPizza->indexOfIgnoreCase("P", $pepperoniPizza->length()));
 
     }
 
     public function testInterfaceArrayAccess() {
 
-        $str = new Str("Hello, world.");
+        $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->assertTrue(isset($str[0]), true);
-        $this->assertTrue(isset($str[12]), true);
-        $this->assertFalse(isset($str[-1]), false);
-        $this->assertFalse(isset($str[13]), false);
+        $this->assertTrue(isset($pepperoniPizza[0]), true);
+        $this->assertTrue(isset($pepperoniPizza[14]), true);
+        $this->assertFalse(isset($pepperoniPizza[-1]), false);
+        $this->assertFalse(isset($pepperoniPizza[15]), false);
 
-        try {
-            $str[0] = "a";
-        }
-        catch (Exception $ex1) {
-            $this->assertEquals($ex1->getMessage(), "Strings are immutable");
-        }
+        $this->assertEquals("p", $pepperoniPizza[0]);
+        $this->assertEquals(" ", $pepperoniPizza[9]);
+        $this->assertEquals("a", $pepperoniPizza[14]);
 
-        try {
-            unset($str[0]);
-        }
-        catch (Exception $ex2) {
-            $this->assertEquals($ex2->getMessage(), "Strings are immutable");
-        }
+        $this->setExpectedException('Exception');
+        $pepperoniPizza[-1];
+        $pepperoniPizza[15];
+        $pepperoniPizza[0] = "a";
+        unset($pepperoniPizza[0]);
 
     }
 
@@ -426,15 +427,15 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     public function testStartsWith() {
 
-        $str = new Str("Hello, world.");
+        $pizza = new Str("pizza");
 
-        $this->assertTrue($str->startsWith("H"));
-        $this->assertTrue($str->startsWith("Hello,"));
-        $this->assertTrue($str->startsWith("HE", 0, true));
-        $this->assertTrue($str->startsWith("HE", null, true));
-        $this->assertFalse($str->startsWith("."));
-        $this->assertFalse($str->startsWith("world."));
-        $this->assertFalse($str->startsWith("LD."));
+        $this->assertTrue($pizza->startsWith("p"));
+        $this->assertTrue($pizza->startsWith("pi"));
+        $this->assertTrue($pizza->startsWith("P", 0, true));
+        $this->assertTrue($pizza->startsWith("P", null, true));
+        $this->assertFalse($pizza->startsWith("a"));
+        $this->assertFalse($pizza->startsWith("za"));
+        $this->assertFalse($pizza->startsWith("ZA"));
 
     }
 

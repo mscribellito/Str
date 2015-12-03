@@ -190,7 +190,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($largePizza->equals("PIZZA"));
 
         $str = new Str("1234");
-
         $this->assertTrue($str->equals(1234));
 
     }
@@ -200,17 +199,16 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $smallPizza = new Str("pizza");
         $largePizza = new Str("PIZZA");
 
-        $this->assertTrue($smallPizza->equals($smallPizza));
+        $this->assertTrue($smallPizza->equalsIgnoreCase($smallPizza));
         $this->assertTrue($smallPizza->equalsIgnoreCase("PIZZA"));
 
         $this->assertTrue($smallPizza->equalsIgnoreCase($largePizza));
         $this->assertTrue($largePizza->equalsIgnoreCase($smallPizza));
 
-        $this->assertTrue($largePizza->equals($largePizza));
+        $this->assertTrue($largePizza->equalsIgnoreCase($largePizza));
         $this->assertTrue($largePizza->equalsIgnoreCase("pizza"));
 
         $str = new Str("1234");
-
         $this->assertTrue($str->equalsIgnoreCase(1234));
 
     }
@@ -225,33 +223,55 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     public function testIndexOf() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $pizza = new Str("pizza");
 
-        $this->assertEquals(0, $pepperoniPizza->indexOf("p"));
-        $this->assertEquals(2, $pepperoniPizza->indexOf("p", 1));
-        $this->assertEquals(1, $pepperoniPizza->indexOf("e"));
-        $this->assertEquals(4, $pepperoniPizza->indexOf("e", 2));
-        $this->assertEquals(9, $pepperoniPizza->indexOf(" "));
-        $this->assertEquals(5, $pepperoniPizza->indexOf("r"));
+        $this->assertEquals(0, $pizza->indexOf("p"));
+        $this->assertEquals(4, $pizza->indexOf("a"));
+        $this->assertEquals(3, $pizza->indexOf("z", 3));
+        $this->assertEquals(-1, $pizza->indexOf(" "));
 
-        $this->assertEquals(0, $pepperoniPizza->indexOf("p", -1));
-        $this->assertEquals(-1, $pepperoniPizza->indexOf("p", $pepperoniPizza->length()));
+    }
+
+    public function testIndexOfFromIndexLessThanZero() {
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(0, $pizza->indexOf("p", -1));
+
+    }
+
+    public function testIndexOfFromIndexGreaterThanOrEqualToLength() {
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(-1, $pizza->indexOf("p", $pizza->length()));
 
     }
 
     public function testIndexOfIgnoreCase() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $pizza = new Str("pizza");
 
-        $this->assertEquals(0, $pepperoniPizza->indexOfIgnoreCase("P"));
-        $this->assertEquals(2, $pepperoniPizza->indexOfIgnoreCase("P", 1));
-        $this->assertEquals(1, $pepperoniPizza->indexOfIgnoreCase("E"));
-        $this->assertEquals(4, $pepperoniPizza->indexOfIgnoreCase("E", 2));
-        $this->assertEquals(9, $pepperoniPizza->indexOfIgnoreCase(" "));
-        $this->assertEquals(5, $pepperoniPizza->indexOfIgnoreCase("R"));
+        $this->assertEquals(0, $pizza->indexOfIgnoreCase("P"));
+        $this->assertEquals(4, $pizza->indexOfIgnoreCase("A"));
+        $this->assertEquals(3, $pizza->indexOfIgnoreCase("Z", 3));
+        $this->assertEquals(-1, $pizza->indexOfIgnoreCase(" "));
 
-        $this->assertEquals(0, $pepperoniPizza->indexOfIgnoreCase("P", -1));
-        $this->assertEquals(-1, $pepperoniPizza->indexOfIgnoreCase("P", $pepperoniPizza->length()));
+    }
+
+    public function testIndexOfIgnoreCaseFromIndexLessThanZero() {
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(0, $pizza->indexOfIgnoreCase("P", -1));
+
+    }
+
+    public function testIndexOfIgnoreCaseFromIndexGreaterThanOrEqualToLength() {
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(-1, $pizza->indexOfIgnoreCase("P", $pizza->length()));
 
     }
 
@@ -311,18 +331,66 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     public function testJoin() {
 
-        $str = Str::join(" ", array("pepperoni", "pizza"));
+        $pepperoniPizza = Str::join(" ", array("pepperoni", "pizza"));
+        $pepperoniPizzaIngredients = Str::join(", ", array("crust", "sauce", "cheese", "pepperoni"));
 
-        $this->assertEquals("pepperoni pizza", $str);
+        $this->assertEquals("pepperoni pizza", $pepperoniPizza);
+        $this->assertEquals("crust, sauce, cheese, pepperoni", $pepperoniPizzaIngredients);
 
     }
 
     public function testLastIndexOf() {
-        
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(3, $pizza->lastIndexOf("z"));
+        $this->assertEquals(4, $pizza->lastIndexOf("a"));
+        $this->assertEquals(3, $pizza->lastIndexOf("z", 3));
+        $this->assertEquals(-1, $pizza->lastIndexOf(" "));
+
+    }
+
+    public function testLastIndexOfFromIndexLessThanZero() {
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(3, $pizza->lastIndexOf("z", -1));
+
+    }
+
+    public function testLastIndexOfFromIndexGreaterThanOrEqualToLength() {
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(-1, $pizza->lastIndexOf("z", $pizza->length()));
+
     }
 
     public function testLastIndexOfIgnoreCase() {
-        
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(3, $pizza->lastIndexOfIgnoreCase("Z"));
+        $this->assertEquals(4, $pizza->indexOfIgnoreCase("A"));
+        $this->assertEquals(3, $pizza->lastIndexOfIgnoreCase("Z", 3));
+        $this->assertEquals(-1, $pizza->lastIndexOfIgnoreCase(" "));
+
+    }
+
+    public function testLastIndexOfIgnoreCaseFromIndexLessThanZero() {
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(3, $pizza->lastIndexOfIgnoreCase("Z", -1));
+
+    }
+
+    public function testLastIndexOfIgnoreCaseFromIndexGreaterThanOrEqualToLength() {
+
+        $pizza = new Str("pizza");
+
+        $this->assertEquals(-1, $pizza->lastIndexOfIgnoreCase("Z", $pizza->length()));
+
     }
 
     public function testLength() {

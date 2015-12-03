@@ -87,7 +87,7 @@ class Str implements ArrayAccess {
         }
 
         $this->value = $value;
-        
+
         $this->length = strlen($this->value);
 
     }
@@ -521,6 +521,7 @@ class Str implements ArrayAccess {
      * @param bool $ignoreCase if true, ignore case
      * @return int a negative integer, zero, or a positive integer as the specified
      * string is greater than, equal to, or less than this string.
+     * @throws StrIndexOutOfBoundsException
      */
     public function regionCompare($toffset, $str, $ooffset, $length, $ignoreCase = false) {
 
@@ -543,6 +544,7 @@ class Str implements ArrayAccess {
      * @param int $length the number of characters to compare
      * @return int a negative integer, zero, or a positive integer as the specified
      * string is greater than, equal to, or less than this string.
+     * @throws StrIndexOutOfBoundsException
      */
     public function regionCompareIgnoreCase($toffset, $str, $ooffset, $length) {
 
@@ -559,6 +561,7 @@ class Str implements ArrayAccess {
      * @param int $length the number of characters to compare
      * @return bool true if the specified subregion of this string matches the
      * specified subregion of the string argument; false otherwise.
+     * @throws StrIndexOutOfBoundsException
      */
     public function regionMatches($toffset, $str, $ooffset, $length) {
 
@@ -575,6 +578,7 @@ class Str implements ArrayAccess {
      * @param int $length the number of characters to compare
      * @return bool true if the specified subregion of this string matches the
      * specified subregion of the string argument; false otherwise.
+     * @throws StrIndexOutOfBoundsException
      */
     public function regionMatchesIgnoreCase($toffset, $str, $ooffset, $length) {
 

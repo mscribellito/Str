@@ -87,7 +87,7 @@ class Str implements ArrayAccess {
         }
 
         $this->value = $value;
-
+        
         $this->length = strlen($this->value);
 
     }
@@ -524,14 +524,12 @@ class Str implements ArrayAccess {
      */
     public function regionCompare($toffset, $str, $ooffset, $length, $ignoreCase = false) {
 
-        $a = $this->substring($toffset);
-        $b = new static($str);
-        $b = $b->substring($ooffset);
+        $other = new static($str);
 
         if ($ignoreCase === false) {
-            return strncmp($a, $b, $length);
+            return strncmp($this->substring($toffset), $other->substring($ooffset), $length);
         } else {
-            return strncasecmp($a, $b, $length);
+            return strncasecmp($this->substring($toffset), $other->substring($ooffset), $length);
         }
 
     }
@@ -609,7 +607,11 @@ class Str implements ArrayAccess {
      * @param int $count this will be set to the number of replacements performed
      * @return \Str the resulting string.
      */
-    public function replaceAll($regex, $replacement, $limit = -1, & $count = 0) {
+    public function replaceAll($regex, $replacement, $limit = null, & $count = 0) {
+
+        if ($limit === null) {
+            $limit = -1;
+        }
 
         return new static(preg_replace($regex, $replacement, $this->value, $limit, $count));
 
@@ -682,6 +684,7 @@ class Str implements ArrayAccess {
      * @param int $fromIndex the index to start the search from
      * @param bool $ignoreCase if true, ignore case
      * @return bool true if the string starts with the specified prefix.
+     * @throws StrIndexOutOfBoundsException
      */
     public function startsWith($prefix, $fromIndex = 0, $ignoreCase = false) {
 

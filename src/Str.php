@@ -137,19 +137,12 @@ class Str implements ArrayAccess {
      * Compares two strings lexicographically. $str will be cast to a string.
      *
      * @param string|\Str $str the string to be compared
-     * @param bool $ignoreCase if true, ignore case
      * @return int a negative integer, zero, or a positive integer as the specified
      * string is greater than, equal to, or less than this string.
      */
-    public function compareTo($str, $ignoreCase = false) {
+    public function compareTo($str) {
 
-        $str = (string) $str;
-
-        if ($ignoreCase === false) {
-            return strcmp($this->value, $str);
-        } else {
-            return strcasecmp($this->value, $str);
-        }
+        return strcmp($this->value, (string) $str);
 
     }
 
@@ -163,7 +156,7 @@ class Str implements ArrayAccess {
      */
     public function compareToIgnoreCase($str) {
 
-        return $this->compareTo($str, true);
+        return strcasecmp($this->value, (string) $str);
 
     }
 
@@ -201,18 +194,11 @@ class Str implements ArrayAccess {
      * Tests if this string ends with the specified suffix.
      *
      * @param string $suffix the suffix
-     * @param bool $ignoreCase if true, ignore case
      * @return bool true if the string ends with the specified suffix.
      */
-    public function endsWith($suffix, $ignoreCase = false) {
+    public function endsWith($suffix) {
 
-        $pattern = "/" . preg_quote($suffix) . "$/";
-
-        if ($ignoreCase === true) {
-            $pattern .= "i";
-        }
-
-        return $this->matches($pattern);
+        return $this->matches("/" . preg_quote($suffix) . "$/");
 
     }
 
@@ -220,17 +206,12 @@ class Str implements ArrayAccess {
      * Compares this string to the specified string. $str will be cast to a string. 
      *
      * @param string|\Str $str the string to compare this string against
-     * @param bool $ignoreCase if true, ignore case
      * @return bool true if the specified string is equivalent to this string,
      * false otherwise.
      */
-    public function equals($str, $ignoreCase = false) {
+    public function equals($str) {
 
-        if ($ignoreCase === false) {
-            return $this->compareTo($str) === 0;
-        } else {
-            return $this->compareToIgnoreCase($str) === 0;
-        }
+        return $this->compareTo($str) === 0;
 
     }
 
@@ -244,7 +225,7 @@ class Str implements ArrayAccess {
      */
     public function equalsIgnoreCase($str) {
 
-        return $this->equals($str, true);
+        return $this->compareToIgnoreCase($str) === 0;
 
     }
 
@@ -271,7 +252,6 @@ class Str implements ArrayAccess {
      *
      * @param string $str a string
      * @param int $fromIndex the index to start the search from
-     * @param bool $ignoreCase if true, ignore case
      * @return int the index of the first occurrence of the string, or -1 if the
      * string does not occur.
      */
@@ -321,7 +301,6 @@ class Str implements ArrayAccess {
      *
      * @param string $str a string
      * @param int $fromIndex the index to start the search from
-     * @param bool $ignoreCase if true, ignore case
      * @return int the index of the last occurrence of the string, or -1 if the
      * string does not occur.
      */
@@ -424,47 +403,6 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Compares two string regions lexicographically.
-     *
-     * @param int $toffset the starting offset of the subregion in this string
-     * @param string $str the string argument
-     * @param int $ooffset the starting offset of the subregion in the string argument
-     * @param int $length the number of characters to compare
-     * @param bool $ignoreCase if true, ignore case
-     * @return int a negative integer, zero, or a positive integer as the specified
-     * string is greater than, equal to, or less than this string.
-     * @throws StrIndexOutOfBoundsException
-     */
-    public function regionCompare($toffset, $str, $ooffset, $length, $ignoreCase = false) {
-
-        $other = new static($str);
-
-        if ($ignoreCase === false) {
-            return strncmp($this->substring($toffset), $other->substring($ooffset), $length);
-        } else {
-            return strncasecmp($this->substring($toffset), $other->substring($ooffset), $length);
-        }
-
-    }
-
-    /**
-     * Compares two string regions lexicographically, ignoring case differences.
-     *
-     * @param int $toffset the starting offset of the subregion in this string
-     * @param string $str the string argument
-     * @param int $ooffset the starting offset of the subregion in the string argument
-     * @param int $length the number of characters to compare
-     * @return int a negative integer, zero, or a positive integer as the specified
-     * string is greater than, equal to, or less than this string.
-     * @throws StrIndexOutOfBoundsException
-     */
-    public function regionCompareIgnoreCase($toffset, $str, $ooffset, $length) {
-
-        return $this->regionCompare($toffset, $str, $ooffset, $length, true);
-
-    }
-
-    /**
      * Tests if two string regions are equal.
      *
      * @param int $toffset the starting offset of the subregion in this string
@@ -477,7 +415,9 @@ class Str implements ArrayAccess {
      */
     public function regionMatches($toffset, $str, $ooffset, $length) {
 
-        return $this->regionCompare($toffset, $str, $ooffset, $length) === 0;
+        $other = new static($str);
+
+        return strncmp($this->substring($toffset), $other->substring($ooffset), $length) === 0;
 
     }
 
@@ -494,7 +434,9 @@ class Str implements ArrayAccess {
      */
     public function regionMatchesIgnoreCase($toffset, $str, $ooffset, $length) {
 
-        return $this->regionCompareIgnoreCase($toffset, $str, $ooffset, $length) === 0;
+        $other = new static($str);
+
+        return strncasecmp($this->substring($toffset), $other->substring($ooffset), $length) === 0;
 
     }
 
@@ -572,19 +514,12 @@ class Str implements ArrayAccess {
      *
      * @param string $prefix the prefix
      * @param int $fromIndex the index to start the search from
-     * @param bool $ignoreCase if true, ignore case
      * @return bool true if the string starts with the specified prefix.
      * @throws StrIndexOutOfBoundsException
      */
-    public function startsWith($prefix, $fromIndex = 0, $ignoreCase = false) {
+    public function startsWith($prefix, $fromIndex = 0) {
 
-        $pattern = "/^" . preg_quote($prefix) . "/";
-
-        if ($ignoreCase === true) {
-            $pattern .= "i";
-        }
-
-        return $this->substring($fromIndex)->matches($pattern);
+        return $this->substring($fromIndex)->matches("/^" . preg_quote($prefix) . "/");
 
     }
 

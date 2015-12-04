@@ -166,15 +166,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    public function testEndsWithIgnoreCase() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertTrue($pizza->endsWith("a", true));
-        $this->assertTrue($pizza->endsWith("A", true));
-
-    }
-
     public function testEquals() {
 
         $smallPizza = new Str("pizza");
@@ -363,28 +354,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    public function testRegionCompare() {
-
-        $cheesePizza = new Str("chz pizza");
-        $pepperoniPizza = new Str("pep pizza");
-
-        $this->assertLessThanOrEqual(-1, $cheesePizza->regionCompare(0, $pepperoniPizza, 0, 3));
-        $this->assertEquals(0, $cheesePizza->regionCompare(4, $pepperoniPizza, 4, 5));
-        $this->assertGreaterThanOrEqual(1, $pepperoniPizza->regionCompare(0, $cheesePizza, 0, 3));
-
-    }
-
-    public function testRegionCompareIgnoreCase() {
-
-        $cheesePizza = new Str("chz PIZZA");
-        $pepperoniPizza = new Str("PEP pizza");
-
-        $this->assertLessThanOrEqual(-1, $cheesePizza->regionCompareIgnoreCase(0, $pepperoniPizza, 0, 3));
-        $this->assertEquals(0, $cheesePizza->regionCompareIgnoreCase(4, $pepperoniPizza, 4, 5));
-        $this->assertGreaterThanOrEqual(1, $pepperoniPizza->regionCompareIgnoreCase(0, $cheesePizza, 0, 3));
-
-    }
-
     public function testRegionMatches() {
 
         $cheesePizza = new Str("chz pizza");
@@ -521,17 +490,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $this->setExpectedException("Str\StrIndexOutOfBoundsException");
         $pizza->startsWith("p", $pizza->length() + 1);
-
-    }
-
-    public function testStartsWithIgnoreCase() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertTrue($pizza->startsWith("P", 0, true));
-        $this->assertTrue($pizza->startsWith("P", null, true));
-        $this->assertTrue($pizza->startsWith("p", 0, true));
-        $this->assertTrue($pizza->startsWith("p", null, true));
 
     }
 

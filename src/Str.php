@@ -99,7 +99,7 @@ class Str implements ArrayAccess {
      */
     public function __toString() {
 
-        return $this->valueOf();
+        return $this->value;
 
     }
 
@@ -112,7 +112,7 @@ class Str implements ArrayAccess {
      */
     public function charAt($index) {
 
-        if ($index < 0 || $index >= $this->length()) {
+        if ($index < 0 || $index >= $this->length) {
             throw new StrIndexOutOfBoundsException($index);
         }
 
@@ -266,26 +266,6 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Returns a string created by using the specified sequence of ASCII values.
-     * 
-     * @param int[] $code ASCII code(s).
-     * @return \Str the string.
-     */
-    public static function fromCharCode($code) {
-
-        $str = "";
-
-        $args = is_array($code) ? $code : func_get_args();
-
-        foreach ($args as $arg) {
-            $str .= chr($arg);
-        }
-
-        return new static($str);
-
-    }
-
-    /**
      * Returns the index within this string of the first occurrence of the specified
      * string, optionally starting the search at the specified index.
      *
@@ -295,37 +275,17 @@ class Str implements ArrayAccess {
      * @return int the index of the first occurrence of the string, or -1 if the
      * string does not occur.
      */
-    public function indexOf($str, $fromIndex = 0, $ignoreCase = false) {
+    public function indexOf($str, $fromIndex = 0) {
 
         if ($fromIndex < 0) {
             $fromIndex = 0;
-        } else if ($fromIndex >= $this->length()) {
+        } else if ($fromIndex >= $this->length) {
             return -1;
         }
 
-        if ($ignoreCase === false) {
-            $index = strpos($this->value, $str, $fromIndex);
-        } else {
-            $index = stripos($this->value, $str, $fromIndex);
-        }
+        $index = strpos($this->value, $str, $fromIndex);
 
         return $index === false ? -1 : $index;
-
-    }
-
-    /**
-     * Returns the index within this string of the first occurrence of the specified
-     * string, ignoring case considerations and optionally starting the search at
-     * the specified index.
-     *
-     * @param string $str a string
-     * @param int $fromIndex the index to start the search from
-     * @return int the index of the first occurrence of the string, or -1 if the
-     * string does not occur.
-     */
-    public function indexOfIgnoreCase($str, $fromIndex = 0) {
-
-        return $this->indexOf($str, $fromIndex, true);
 
     }
 
@@ -336,7 +296,7 @@ class Str implements ArrayAccess {
      */
     public function isEmpty() {
 
-        return $this->length() === 0;
+        return $this->length === 0;
 
     }
 
@@ -365,37 +325,17 @@ class Str implements ArrayAccess {
      * @return int the index of the last occurrence of the string, or -1 if the
      * string does not occur.
      */
-    public function lastIndexOf($str, $fromIndex = 0, $ignoreCase = false) {
+    public function lastIndexOf($str, $fromIndex = 0) {
 
         if ($fromIndex < 0) {
             $fromIndex = 0;
-        } else if ($fromIndex >= $this->length()) {
+        } else if ($fromIndex >= $this->length) {
             return -1;
         }
 
-        if ($ignoreCase === false) {
-            $index = strrpos($this->value, $str, $fromIndex);
-        } else {
-            $index = strripos($this->value, $str, $fromIndex);
-        }
+        $index = strrpos($this->value, $str, $fromIndex);
 
         return $index === false ? -1 : $index;
-
-    }
-
-    /**
-     * Returns the index within this string of the last occurrence of the specified
-     * character, ignoring case considerations and optionally starting the search
-     * at the specified index.
-     *
-     * @param string $str a string
-     * @param int $fromIndex the index to start the search from
-     * @return int the index of the last occurrence of the string, or -1 if the
-     * string does not occur.
-     */
-    public function lastIndexOfIgnoreCase($str, $fromIndex = 0) {
-
-        return $this->lastIndexOf($str, $fromIndex, true);
 
     }
 
@@ -438,7 +378,7 @@ class Str implements ArrayAccess {
      */
     public function offsetExists($offset) {
 
-        return $offset >= 0 && $this->length() > $offset;
+        return $offset >= 0 && $this->length > $offset;
 
     }
 
@@ -480,34 +420,6 @@ class Str implements ArrayAccess {
     public function offsetUnset($offset) {
 
         throw new Exception("Strings are immutable");
-
-    }
-
-    # start:comments
-
-    /**
-     * Pads the left side of this string to a specified length with another string.
-     *
-     * @param int $length the length of the padded string
-     * @param string $str the string to pad with
-     * @return \Str the left padded string.
-     */
-    public function padLeft($length, $str) {
-
-        return new static(str_pad($this->value, $length, $str, STR_PAD_LEFT));
-
-    }
-
-    /**
-     * Pads the right side of this string to a specified length with another string.
-     *
-     * @param int $length the length of the padded string
-     * @param string $str the string to pad with
-     * @return \Str the right padded string.
-     */
-    public function padRight($length, $str) {
-
-        return new static(str_pad($this->value, $length, $str, STR_PAD_RIGHT));
 
     }
 
@@ -636,32 +548,6 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Returns a string resulting from replacing all occurrences of old in this
-     * string with new, ignoring case differences.
-     *
-     * @param string $old the string to be replaced
-     * @param string $new the replacement string
-     * @param int $count this will be set to the number of replacements performed
-     * @return \Str the resulting string.
-     */
-    public function replaceIgnoreCase($old, $new, & $count = 0) {
-
-        return new static(str_ireplace($old, $new, $this->value, $count));
-
-    }
-
-    /**
-     * Reverses this string.
-     *
-     * @return \Str the reversed string.
-     */
-    public function reverse() {
-
-        return new static(strrev($this->value));
-
-    }
-
-    /**
      * Splits this string around matches of the given regular expression.
      *
      * @param string $regex the delimiting regular expression
@@ -714,12 +600,12 @@ class Str implements ArrayAccess {
 
         if ($beginIndex < 0) {
             throw new StrIndexOutOfBoundsException($beginIndex);
-        } else if ($beginIndex === $this->length()) {
+        } else if ($beginIndex === $this->length) {
             return new static("");
         }
 
         if ($endIndex === null) {
-            $length = $this->length() - $beginIndex;
+            $length = $this->length - $beginIndex;
             if ($length < 0) {
                 throw new StrIndexOutOfBoundsException($length);
             }
@@ -729,14 +615,14 @@ class Str implements ArrayAccess {
                 return new static($this->value, $beginIndex, $length);
             }
         } else {
-            if ($endIndex > $this->length()) {
+            if ($endIndex > $this->length) {
                 throw new StrIndexOutOfBoundsException($endIndex);
             }
             $length = $endIndex - $beginIndex;
             if ($length < 0) {
                 throw new StrIndexOutOfBoundsException($length);
             }
-            if ($beginIndex === 0 && $endIndex === $this->length()) {
+            if ($beginIndex === 0 && $endIndex === $this->length) {
                 return $this;
             } else {
                 return new static($this->value, $beginIndex, $length);
@@ -792,44 +678,6 @@ class Str implements ArrayAccess {
     public function trim($characterMask = " \t\n\r\0\x0B") {
 
         return new static(trim($this->value, $characterMask));
-
-    }
-
-    /**
-     * Returns a string whose value is this string, with any leading whitespace removed.
-     *
-     * @param string $characterMask characters to strip
-     * @return \Str a string whose value is this string, with any leading white
-     * space removed, or this string if it has no leading white space.
-     */
-    public function trimLeft($characterMask = " \t\n\r\0\x0B") {
-
-        return new static(ltrim($this->value, $characterMask));
-
-    }
-
-    /**
-     * Returns a string whose value is this string, with any trailing whitespace
-     * removed.
-     *
-     * @param string $characterMask characters to strip
-     * @return \Str a string whose value is this string, with any trailing white
-     * space removed, or this string if it has no trailing white space.
-     */
-    public function trimRight($characterMask = " \t\n\r\0\x0B") {
-
-        return new static(rtrim($this->value, $characterMask));
-
-    }
-
-    /**
-     * The value of this string is returned.
-     *
-     * @return string the string itself.
-     */
-    public function valueOf() {
-
-        return $this->value;
 
     }
 

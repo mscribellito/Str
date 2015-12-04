@@ -47,7 +47,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pizza = new Str("pizza");
         $nullPizza = new Str();
-        $emptyPizza = new Str();
+        $emptyPizza = new Str("");
 
         $this->assertEquals("pizza", $pizza);
         $this->assertEquals("", $nullPizza);
@@ -248,33 +248,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    public function testIndexOfIgnoreCase() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertEquals(0, $pizza->indexOfIgnoreCase("P"));
-        $this->assertEquals(4, $pizza->indexOfIgnoreCase("A"));
-        $this->assertEquals(3, $pizza->indexOfIgnoreCase("Z", 3));
-        $this->assertEquals(-1, $pizza->indexOfIgnoreCase(" "));
-
-    }
-
-    public function testIndexOfIgnoreCaseFromIndexLessThanZero() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertEquals(0, $pizza->indexOfIgnoreCase("P", -1));
-
-    }
-
-    public function testIndexOfIgnoreCaseFromIndexGreaterThanOrEqualToLength() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertEquals(-1, $pizza->indexOfIgnoreCase("P", $pizza->length()));
-
-    }
-
     public function testInterfaceArrayAccessOffsetExists() {
 
         $pepperoniPizza = new Str("pepperoni pizza");
@@ -321,7 +294,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pizza = new Str("pizza");
         $nullPizza = new Str();
-        $emptyPizza = new Str();
+        $emptyPizza = new Str("");
 
         $this->assertFalse($pizza->isEmpty());
         $this->assertTrue($nullPizza->isEmpty());
@@ -348,6 +321,9 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(3, $pizza->lastIndexOf("z", 3));
         $this->assertEquals(-1, $pizza->lastIndexOf(" "));
 
+        $pizzaPizza = new Str("pizza pizza");
+        #$this->assertEquals(1, $pizzaPizza->lastIndexOf("i", 5));
+
     }
 
     public function testLastIndexOfFromIndexLessThanZero() {
@@ -366,38 +342,11 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    public function testLastIndexOfIgnoreCase() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertEquals(3, $pizza->lastIndexOfIgnoreCase("Z"));
-        $this->assertEquals(4, $pizza->indexOfIgnoreCase("A"));
-        $this->assertEquals(3, $pizza->lastIndexOfIgnoreCase("Z", 3));
-        $this->assertEquals(-1, $pizza->lastIndexOfIgnoreCase(" "));
-
-    }
-
-    public function testLastIndexOfIgnoreCaseFromIndexLessThanZero() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertEquals(3, $pizza->lastIndexOfIgnoreCase("Z", -1));
-
-    }
-
-    public function testLastIndexOfIgnoreCaseFromIndexGreaterThanOrEqualToLength() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertEquals(-1, $pizza->lastIndexOfIgnoreCase("Z", $pizza->length()));
-
-    }
-
     public function testLength() {
 
         $pizza = new Str("pizza");
         $nullPizza = new Str();
-        $emptyPizza = new Str();
+        $emptyPizza = new Str("");
 
         $this->assertEquals(5, $pizza->length());
         $this->assertEquals(0, $nullPizza->length());
@@ -411,22 +360,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $this->assertTrue($pizza->matches("/[a-z]/"));
         $this->assertFalse($pizza->matches("/[0-9]/"));
-
-    }
-
-    public function testPadLeft() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertEquals("___pizza", $pizza->padLeft(8, "_"));
-
-    }
-
-    public function testPadRight() {
-
-        $pizza = new Str("pizza");
-
-        $this->assertEquals("pizza___", $pizza->padRight(8, "_"));
 
     }
 
@@ -538,34 +471,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $pizza = $pizza->replaceFirst("/\w+\s?/", "");
 
         $this->assertEquals("pizza", $pizza);
-
-    }
-
-    public function testReplaceIgnoreCase() {
-
-        $lie = new Str("pizza SUCKS");
-        $truth = $lie->replaceIgnoreCase("sucks", "is life");
-
-        $this->assertEquals("pizza is life", $truth);
-
-    }
-
-    public function testReplaceIgnoreCaseWithCount() {
-
-        $count = 0;
-        $lie = new Str("pizza is gross GROSS gross");
-        $truth = $lie->replaceIgnoreCase("gross", "great", $count);
-
-        $this->assertEquals("pizza is great great great", $truth);
-        $this->assertEquals(3, $count);
-
-    }
-
-    public function testReverse() {
-
-        $backwardsPizza = new Str("azzip");
-
-        $this->assertEquals("pizza", $backwardsPizza->reverse());
 
     }
 
@@ -735,22 +640,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $pizza = new Str(" pizza ");
 
         $this->assertEquals("pizza", $pizza->trim());
-
-    }
-
-    public function testTrimLeft() {
-
-        $pizza = new Str(" pizza ");
-
-        $this->assertEquals("pizza ", $pizza->trimLeft());
-
-    }
-
-    public function testTrimRight() {
-
-        $pizza = new Str(" pizza ");
-
-        $this->assertEquals(" pizza", $pizza->trimRight());
 
     }
 

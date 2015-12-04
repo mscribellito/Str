@@ -313,7 +313,6 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(-1, $pizza->lastIndexOf(" "));
 
         $pizzaPizza = new Str("pizza pizza");
-        #$this->assertEquals(1, $pizzaPizza->lastIndexOf("i", 5));
 
     }
 
@@ -364,7 +363,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    public function testRegionMatchesIgnoreCase() {
+    public function testRegionMatchesIgnoringCase() {
 
         $cheesePizza = new Str("chz PIZZA");
         $pepperoniPizza = new Str("PEP pizza");

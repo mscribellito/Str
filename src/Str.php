@@ -409,34 +409,20 @@ class Str implements ArrayAccess {
      * @param string $str the string argument
      * @param int $ooffset the starting offset of the subregion in the string argument
      * @param int $length the number of characters to compare
+     * @param bool $ignoreCase if true, ignore case
      * @return bool true if the specified subregion of this string matches the
      * specified subregion of the string argument; false otherwise.
      * @throws StrIndexOutOfBoundsException
      */
-    public function regionMatches($toffset, $str, $ooffset, $length) {
+    public function regionMatches($toffset, $str, $ooffset, $length, $ignoreCase = false) {
 
         $other = new static($str);
+
+        if ($ignoreCase === true) {
+            return strncasecmp($this->substring($toffset), $other->substring($ooffset), $length) === 0;
+        }
 
         return strncmp($this->substring($toffset), $other->substring($ooffset), $length) === 0;
-
-    }
-
-    /**
-     * Tests if two string regions are equal, ignoring case differences.
-     *
-     * @param int $toffset the starting offset of the subregion in this string
-     * @param string $str the string argument
-     * @param int $ooffset the starting offset of the subregion in the string argument
-     * @param int $length the number of characters to compare
-     * @return bool true if the specified subregion of this string matches the
-     * specified subregion of the string argument; false otherwise.
-     * @throws StrIndexOutOfBoundsException
-     */
-    public function regionMatchesIgnoreCase($toffset, $str, $ooffset, $length) {
-
-        $other = new static($str);
-
-        return strncasecmp($this->substring($toffset), $other->substring($ooffset), $length) === 0;
 
     }
 

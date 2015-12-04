@@ -369,8 +369,8 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $cheesePizza = new Str("chz PIZZA");
         $pepperoniPizza = new Str("PEP pizza");
 
-        $this->assertTrue($cheesePizza->regionMatchesIgnoreCase(4, $pepperoniPizza, 4, 5));
-        $this->assertFalse($cheesePizza->regionMatches(0, $pepperoniPizza, 0, 3));
+        $this->assertTrue($cheesePizza->regionMatches(4, $pepperoniPizza, 4, 5, true));
+        $this->assertFalse($cheesePizza->regionMatches(0, $pepperoniPizza, 0, 3, true));
 
     }
 

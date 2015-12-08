@@ -75,7 +75,7 @@ This is made possible by the ``__toString()`` magic method.
 API
 ---
 
-__construct([original="", [offset=null, [length=null]]])
+__construct([original="", [offset=null, [count=null]]])
 
 __toString()
 

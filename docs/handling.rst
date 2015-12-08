@@ -24,17 +24,11 @@ equalsIgnoreCase
 indexOf
 -------
 
-indexOfIgnoreCase
------------------
-
 isEmpty
 -------
 
 lastIndexOf
 -----------
-
-lastIndexOfIgnoreCase
----------------------
 
 length
 ------
@@ -42,17 +36,8 @@ length
 matches
 -------
 
-regionCompare
--------------
-
-regionCompareIgnoreCase
------------------------
-
 regionMatches
 -------------
-
-regionMatchesIgnoreCase
------------------------
 
 startsWith
 ----------

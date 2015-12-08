@@ -75,7 +75,7 @@ This is made possible by the ``__toString()`` magic method.
 API
 ---
 
-__construct(original, offset, length)
+__construct([original="", [offset=null, [length=null]]])
 
 __toString()
 
@@ -99,41 +99,31 @@ equalsIgnoreCase(str)
 
 format(format)
 
-indexOf(str, fromIndex)
+indexOf(str, [fromIndex=0])
 
 isEmpty()
 
 join(delimiter, elements)
 
-lastIndexOf(str, fromIndex)
-
-lastIndexOfIgnoreCase(str, fromIndex)
+lastIndexOf(str, [fromIndex=0])
 
 length()
 
-matches(regex, matches)
+matches(regex, [matches=null])
 
-offsetExists(offset)
+regionMatches(toffset, str, ooffset, length, [ignoreCase=false])
 
-offsetGet(offset)
+replace(old, new, [count])
 
-offsetSet(offset, value)
-
-offsetUnset(offset)
-
-regionMatches(toffset, str, ooffset, length, ignoreCase)
-
-replace(old, new, count)
-
-replaceAll(regex, replacement, limit, count)
+replaceAll(regex, replacement, [limit=null, [count=0]])
 
 replaceFirst(regex, replacement)
 
-split(regex, limit)
+split(regex, [limit=null])
 
-startsWith(prefix, fromIndex)
+startsWith(prefix, [fromIndex=0])
 
-substring(beginIndex, endIndex)
+substring(beginIndex, [endIndex=null])
 
 toCharArray()
 
@@ -141,4 +131,4 @@ toLowerCase()
 
 toUpperCase()
 
-trim(characterMask)
+trim([characterMask=" \t\n\r\0\x0B"])

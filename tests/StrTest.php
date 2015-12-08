@@ -382,54 +382,12 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    public function testReplaceWithCount() {
-
-        $count = 0;
-        $lie = new Str("pizza is gross gross gross");
-        $truth = $lie->replace("gross", "great", $count);
-
-        $this->assertEquals("pizza is great great great", $truth);
-        $this->assertEquals(3, $count);
-
-    }
-
     public function testReplaceAll() {
 
         $pizza = new Str("1 pizza 2 pizza 3 pizza");
         $pizza = $pizza->replaceAll("/[0-9]\s/", "");
 
         $this->assertEquals("pizza pizza pizza", $pizza);
-
-    }
-
-    public function testReplaceAllWithLimit() {
-
-        $pizza = new Str("1 pizza 2 pizza 3 pizza");
-        $pizza = $pizza->replaceAll("/[0-9]\s/", "", 2);
-
-        $this->assertEquals("pizza pizza 3 pizza", $pizza);
-
-    }
-
-    public function testReplaceAllWithCount() {
-
-        $count = 0;
-        $pizza = new Str("1 pizza 2 pizza 3 pizza");
-        $pizza = $pizza->replaceAll("/[0-9]\s/", "", null, $count);
-
-        $this->assertEquals("pizza pizza pizza", $pizza);
-        $this->assertEquals(3, $count);
-
-    }
-
-    public function testReplaceAllWithLimitAndCount() {
-
-        $count = 0;
-        $pizza = new Str("1 pizza 2 pizza 3 pizza");
-        $pizza = $pizza->replaceAll("/[0-9]\s/", "", 2, $count);
-
-        $this->assertEquals("pizza pizza 3 pizza", $pizza);
-        $this->assertEquals(2, $count);
 
     }
 

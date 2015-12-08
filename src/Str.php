@@ -336,16 +336,11 @@ class Str implements ArrayAccess {
      * Tells whether or not this string matches the given regular expression.
      *
      * @param string $regex the regular expression to which this string is to be matched
-     * @param \Str[] $matches array to be filled with results of search.
      * @return bool true if and only if this string matches the given regular expression.
      */
     public function matches($regex, & $matches = null) {
 
-        $match = preg_match($regex, $this->value, $matches);
-
-        for ($i = 0, $l = count($matches); $i < $l; $i++) {
-            $matches[$i] = new static($matches[$i]);
-        }
+        $match = preg_match($regex, $this->value);
 
         return $match === 1;
 
@@ -435,12 +430,11 @@ class Str implements ArrayAccess {
      *
      * @param string $old the string to be replaced
      * @param string $new the replacement string
-     * @param int $count this will be set to the number of replacements performed
      * @return \Str the resulting string.
      */
-    public function replace($old, $new, & $count = 0) {
+    public function replace($old, $new) {
 
-        return new static(str_replace($old, $new, $this->value, $count));
+        return new static(str_replace($old, $new, $this->value));
 
     }
 
@@ -450,17 +444,11 @@ class Str implements ArrayAccess {
      *
      * @param string $regex the regular expression to which this string is to be matched
      * @param string $replacement the string to be substituted for each match
-     * @param int $limit the maximum possible replacements for each pattern
-     * @param int $count this will be set to the number of replacements performed
      * @return \Str the resulting string.
      */
-    public function replaceAll($regex, $replacement, $limit = null, & $count = 0) {
+    public function replaceAll($regex, $replacement) {
 
-        if ($limit === null) {
-            $limit = -1;
-        }
-
-        return new static(preg_replace($regex, $replacement, $this->value, $limit, $count));
+        return new static(preg_replace($regex, $replacement, $this->value));
 
     }
 
@@ -474,7 +462,7 @@ class Str implements ArrayAccess {
      */
     public function replaceFirst($regex, $replacement) {
 
-        return $this->replaceAll($regex, $replacement, 1);
+        return new static(preg_replace($regex, $replacement, $this->value, 1));
 
     }
 

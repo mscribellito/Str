@@ -338,7 +338,7 @@ class Str implements ArrayAccess {
      * @param string $regex the regular expression to which this string is to be matched
      * @return bool true if and only if this string matches the given regular expression.
      */
-    public function matches($regex, & $matches = null) {
+    public function matches($regex) {
 
         $match = preg_match($regex, $this->value);
 
@@ -428,13 +428,13 @@ class Str implements ArrayAccess {
      * Returns a string resulting from replacing all occurrences of old in this
      * string with new.
      *
-     * @param string $old the string to be replaced
-     * @param string $new the replacement string
+     * @param string $target the string to be replaced
+     * @param string $replacement the replacement string
      * @return \Str the resulting string.
      */
-    public function replace($old, $new) {
+    public function replace($target, $replacement) {
 
-        return new static(str_replace($old, $new, $this->value));
+        return new static(str_replace($target, $replacement, $this->value));
 
     }
 
@@ -494,13 +494,13 @@ class Str implements ArrayAccess {
      * Tests if this string starts with the specified prefix.
      *
      * @param string $prefix the prefix
-     * @param int $fromIndex the index to start the search from
+     * @param int $toffset the index to start the search from
      * @return bool true if the string starts with the specified prefix.
      * @throws StrIndexOutOfBoundsException
      */
-    public function startsWith($prefix, $fromIndex = 0) {
+    public function startsWith($prefix, $toffset = 0) {
 
-        return $this->substring($fromIndex)->matches("/^" . preg_quote($prefix) . "/");
+        return $this->substring($toffset)->matches("/^" . preg_quote($prefix) . "/");
 
     }
 

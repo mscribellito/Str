@@ -16,17 +16,8 @@ concat
 format
 ------
 
-fromCharCode
-------------
-
 join
 ----
-
-padLeft
--------
-
-padRight
---------
 
 replace
 -------
@@ -36,12 +27,6 @@ replaceAll
 
 replaceFirst
 ------------
-
-replaceIgnoreCase
------------------
-
-reverse
--------
 
 split
 -----
@@ -60,12 +45,3 @@ toUpperCase
 
 trim
 ----
-
-trimLeft
---------
-
-trimRight
----------
-
-valueOf
--------

@@ -109,13 +109,13 @@ lastIndexOf(str, [fromIndex=0])
 
 length()
 
-matches(regex, [matches=null])
+matches(regex)
 
 regionMatches(toffset, str, ooffset, length, [ignoreCase=false])
 
-replace(old, new, [count])
+replace(old, new)
 
-replaceAll(regex, replacement, [limit=null, [count=0]])
+replaceAll(regex, replacement)
 
 replaceFirst(regex, replacement)
 

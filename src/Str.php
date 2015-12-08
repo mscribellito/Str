@@ -483,7 +483,11 @@ class Str implements ArrayAccess {
      * @return \Str[] the array of strings computed by splitting this string around
      * matches of the given regular expression.
      */
-    public function split($regex, $limit = -1) {
+    public function split($regex, $limit = null) {
+
+        if ($limit === null) {
+            $limit = -1;
+        }
 
         $parts = preg_split($regex, $this->value, $limit);
 

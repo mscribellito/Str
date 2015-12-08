@@ -62,33 +62,36 @@ class Str implements ArrayAccess {
     protected $value = "";
 
     /**
-     * Initializes a newly created, empty String object.
+     * Instantiates a new Str that contains characters from a string. The offset 
+     * argument is the index of the first character of the string and the count 
+     * argument specifies the length of the string.
      *
      * @param mixed $original a string
      * @param int $offset the initial offset
-     * @param int $length the length
+     * @param int $count the length
      * @throws StrIndexOutOfBoundsException
      */
-    public function __construct($original = "", $offset = null, $length = null) {
+    public function __construct($original = "", $offset = null, $count = null) {
 
         $value = (string) $original;
+        $length = strlen($value);
 
-        if ($offset !== null && $length !== null) {
+        if ($offset !== null && $count !== null) {
             if ($offset < 0) {
                 throw new StrIndexOutOfBoundsException($offset);
             }
-            if ($length < 0) {
-                throw new StrIndexOutOfBoundsException($length);
+            if ($count < 0) {
+                throw new StrIndexOutOfBoundsException($count);
             }
-            if ($offset > strlen($value) - $length) {
-                throw new StrIndexOutOfBoundsException($offset + $length);
+            if ($offset > $length - $count) {
+                throw new StrIndexOutOfBoundsException($offset + $count);
             }
-            $value = substr($value, $offset, $length);
+            $value = substr($value, $offset, $count);
         }
 
         $this->value = $value;
 
-        $this->length = strlen($this->value);
+        $this->length = $length;
 
     }
 
@@ -263,7 +266,7 @@ class Str implements ArrayAccess {
             return -1;
         }
 
-        $index = strpos($this->value, $str, $fromIndex);
+        $index = strpos($this->value, (string) $str, $fromIndex);
 
         return $index === false ? -1 : $index;
 
@@ -312,7 +315,7 @@ class Str implements ArrayAccess {
             return -1;
         }
 
-        $index = strrpos($this->value, $str, $fromIndex);
+        $index = strrpos($this->value, (string) $str, $fromIndex);
 
         return $index === false ? -1 : $index;
 

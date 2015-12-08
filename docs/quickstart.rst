@@ -83,7 +83,7 @@ charAt(index)
 
 charCodeAt(index)
 
-compareTo(str, ignoreCase)
+compareTo(str)
 
 compareToIgnoreCase(str)
 
@@ -91,25 +91,21 @@ concat()
 
 contains(str)
 
-endsWith(suffix, ignoreCase)
+endsWith(suffix)
 
-equals(str, ignoreCase)
+equals(str)
 
 equalsIgnoreCase(str)
 
 format(format)
 
-fromCharCode(code)
-
-indexOf(str, fromIndex, ignoreCase)
-
-indexOfIgnoreCase(str, fromIndex)
+indexOf(str, fromIndex)
 
 isEmpty()
 
 join(delimiter, elements)
 
-lastIndexOf(str, fromIndex, ignoreCase)
+lastIndexOf(str, fromIndex)
 
 lastIndexOfIgnoreCase(str, fromIndex)
 
@@ -125,17 +121,7 @@ offsetSet(offset, value)
 
 offsetUnset(offset)
 
-padLeft(length, str)
-
-padRight(length, str)
-
-regionCompare(toffset, str, ooffset, length, ignoreCase)
-
-regionCompareIgnoreCase(toffset, str, ooffset, length)
-
-regionMatches(toffset, str, ooffset, length)
-
-regionMatchesIgnoreCase(toffset, str, ooffset, length)
+regionMatches(toffset, str, ooffset, length, ignoreCase)
 
 replace(old, new, count)
 
@@ -143,13 +129,9 @@ replaceAll(regex, replacement, limit, count)
 
 replaceFirst(regex, replacement)
 
-replaceIgnoreCase(old, new, count)
-
-reverse()
-
 split(regex, limit)
 
-startsWith(prefix, fromIndex, ignoreCase)
+startsWith(prefix, fromIndex)
 
 substring(beginIndex, endIndex)
 
@@ -160,9 +142,3 @@ toLowerCase()
 toUpperCase()
 
 trim(characterMask)
-
-trimLeft(characterMask)
-
-trimRight(characterMask)
-
-valueOf()

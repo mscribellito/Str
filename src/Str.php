@@ -42,8 +42,8 @@ use ArrayAccess,
  * is immutable (constant) and its value cannot be changed after creation.
  *
  * @author Michael Scribellito <mscribellito@gmail.com>
- * @copyright (c) 2015, Michael Scribellito
- * @link https://github.com/mscribellito/String
+ * @copyright (c) 2016, Michael Scribellito
+ * @link https://github.com/mscribellito/Str
  */
 class Str implements ArrayAccess {
 

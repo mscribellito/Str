@@ -7,6 +7,17 @@ Requirements
 ------------
 PHP version 5.3 or newer is required.
 
+Example
+-------
+
+```php
+require 'src/Str.php';
+use Str\Str;
+
+$str = new Str('pizza!');
+echo $str; // pizza!
+```
+
 License
 -------
 Released under the [MIT License](https://opensource.org/licenses/MIT). See [LICENSE](LICENSE) for details.

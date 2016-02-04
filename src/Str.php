@@ -1,11 +1,11 @@
 <?php
 
 /**
- * String
+ * Str
  *
  * This content is released under the The MIT License (MIT)
  *
- * Copyright (c) 2015 Michael Scribellito
+ * Copyright (c) 2016 Michael Scribellito
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

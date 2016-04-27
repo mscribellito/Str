@@ -113,7 +113,7 @@ matches(regex)
 
 regionMatches(toffset, str, ooffset, length, [ignoreCase=false])
 
-replace(old, new)
+replace(target, replacement)
 
 replaceAll(regex, replacement)
 
@@ -121,7 +121,7 @@ replaceFirst(regex, replacement)
 
 split(regex, [limit=null])
 
-startsWith(prefix, [fromIndex=0])
+startsWith(prefix, [toffset=0])
 
 substring(beginIndex, [endIndex=null])
 

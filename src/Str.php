@@ -138,6 +138,7 @@ class Str implements ArrayAccess {
     /**
      * Compares two strings lexicographically.
      *
+     * @param string $str the string to be compared
      * @return int a negative integer, zero, or a positive integer as the specified
      * string is greater than, equal to, or less than this string.
      */
@@ -150,6 +151,7 @@ class Str implements ArrayAccess {
     /**
      * Compares two strings lexicographically, ignoring case differences.
      *
+     * @param string $str the string to be compared
      * @return int a negative integer, zero, or a positive integer as the specified
      * string is greater than, equal to, or less than this string.
      */
@@ -204,7 +206,7 @@ class Str implements ArrayAccess {
     /**
      * Compares this string to the specified string.
      *
-     * @param string|\Str $str the string to compare this string against
+     * @param string $str the string to compare this string against
      * @return bool true if the specified string is equivalent to this string,
      * false otherwise.
      */
@@ -217,7 +219,7 @@ class Str implements ArrayAccess {
     /**
      * Compares this string to the specified string, ignoring case considerations. 
      *
-     * @param string|\Str $str the string to compare this string against
+     * @param string $str the string to compare this string against
      * @return bool true if the specified string is equivalent to this string,
      * false otherwise.
      */
@@ -283,7 +285,7 @@ class Str implements ArrayAccess {
      * specified delimiter.
      *
      * @param string $delimiter the delimiter that separates each element
-     * @param string[] $elements the elements to join together
+     * @param mixed[] $elements the elements to join together
      * @return \Str a new string that is composed of the elements separated
      * by the delimiter.
      */
@@ -346,7 +348,7 @@ class Str implements ArrayAccess {
      * Implements part of the ArrayAccess interface.
      *
      * @param int $offset the index
-     * @return boolean true if character exists at the specified index.
+     * @return bool true if character exists at the specified index.
      */
     public function offsetExists($offset) {
 

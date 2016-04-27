@@ -136,9 +136,8 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Compares two strings lexicographically. $str will be cast to a string.
+     * Compares two strings lexicographically.
      *
-     * @param string|\Str $str the string to be compared
      * @return int a negative integer, zero, or a positive integer as the specified
      * string is greater than, equal to, or less than this string.
      */
@@ -149,10 +148,8 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Compares two strings lexicographically, ignoring case differences. $str 
-     * will be cast to a string.
+     * Compares two strings lexicographically, ignoring case differences.
      *
-     * @param string|\Str $str the string to be compared
      * @return int a negative integer, zero, or a positive integer as the specified
      * string is greater than, equal to, or less than this string.
      */
@@ -205,7 +202,7 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Compares this string to the specified string. $str will be cast to a string. 
+     * Compares this string to the specified string.
      *
      * @param string|\Str $str the string to compare this string against
      * @return bool true if the specified string is equivalent to this string,
@@ -219,7 +216,6 @@ class Str implements ArrayAccess {
 
     /**
      * Compares this string to the specified string, ignoring case considerations. 
-     * $str will be cast to a string.
      *
      * @param string|\Str $str the string to compare this string against
      * @return bool true if the specified string is equivalent to this string,
@@ -424,8 +420,8 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Returns a string resulting from replacing all occurrences of old in this
-     * string with new.
+     * Returns a string resulting from replacing all occurrences of target in this
+     * string with replacement.
      *
      * @param string $target the string to be replaced
      * @param string $replacement the replacement string
@@ -490,7 +486,8 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Tests if this string starts with the specified prefix.
+     * Tests if this string starts with the specified prefix, optionally starting 
+     * the search at the specified index.
      *
      * @param string $prefix the prefix
      * @param int $toffset the index to start the search from

@@ -1,21 +1,17 @@
+Str, PHP String Class
+=====================
+
 What is Str?
-============
+------------
 
 Str is a PHP class that wraps the native string functions in an effort to simplify string handling and manipulation. Str provides methods for examining individual characters of the string, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. A Str is immutable (constant) and its value cannot be changed after creation.
-
-Requirements
-------------
-PHP version 5.3 or newer is required.
 
 Example
 -------
 
 ```php
-require "src/Str.php";
-use Str\Str;
-
-$pizza = new Str("pizza!");
-echo $pizza; // pizza!
+$str = new Str("pizza!");
+echo $str; // pizza!
 ```
 
 Constructor Summary
@@ -60,6 +56,10 @@ Modifier and Type | Method and Description
 `Str` | `toLowerCase()`<br>Converts all of the characters in this string to lower case.
 `Str` | `toUpperCase()`<br>Converts all of the characters in this string to upper case.
 `Str` | `trim([string $characterMask=" \t\n\r\0\x0B"])`<br>Returns a string whose value is this string, with any leading and trailing whitespace removed.
+
+Requirements
+------------
+PHP version 5.3 or newer is required.
 
 License
 -------

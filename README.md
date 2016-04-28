@@ -11,11 +11,11 @@ Example
 -------
 
 ```php
-require 'src/Str.php';
+require "src/Str.php";
 use Str\Str;
 
-$str = new Str('pizza!');
-echo $str; // pizza!
+$pizza = new Str("pizza!");
+echo $pizza; // pizza!
 ```
 
 Constructor Summary

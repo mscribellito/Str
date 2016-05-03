@@ -40,7 +40,7 @@ Modifier and Type | Method and Description
 `bool` | `equalsIgnoreCase(string $str)`<br>Compares this string to the specified string, ignoring case considerations. 
 `static` `Str` | `format(string $format)`<br>Returns a formatted string using the specified format string and arguments.
 `int` | `indexOf(string $str, [int $fromIndex=0])`<br>Returns the index within this string of the first occurrence of the specified string, optionally starting the search at the specified index.
-`bool` | `isEmpty()`<br>Returns true if and only if length() is 0.
+`bool` | `isEmpty()`<br>Returns true if and only if `length()` is 0.
 `static` `Str` | `join(string $delimiter, mixed[] $elements)`<br>Returns a new string composed of array elements joined together with the specified delimiter.
 `int` | `lastIndexOf(string $str, [int $fromIndex=0])`<br>Returns the index within this string of the last occurrence of the specified character, optionally starting the search at the specified index.
 `int` | `length()`<br>Returns the length of this string.

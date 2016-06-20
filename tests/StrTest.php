@@ -1,6 +1,6 @@
 <?php
 
-namespace mscribellito\Str;
+namespace mscribellito;
 
 use PHPUnit_Framework_TestCase;
 
@@ -11,34 +11,34 @@ class StrTest extends PHPUnit_Framework_TestCase {
     public function testConstructor() {
 
         $pepperoniPizza = new Str("pepperoni pizza");
-        $this->assertInstanceOf("mscribellito\Str\Str", $pepperoniPizza);
+        $this->assertInstanceOf("mscribellito\Str", $pepperoniPizza);
 
     }
 
     public function testConstructorWithOffsetAndLength() {
 
         $pepperoniPizza = new Str(" pepperoni pizza ", 1, 15);
-        $this->assertInstanceOf("mscribellito\Str\Str", $pepperoniPizza);
+        $this->assertInstanceOf("mscribellito\Str", $pepperoniPizza);
 
     }
 
     public function testConstructorWithOffsetLessThanZero() {
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         new Str("pizza", -1, 0);
 
     }
 
     public function testConstructorWithLengthLessThanZero() {
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         new Str("pizza", 0, -1);
 
     }
 
     public function testConstructorWithOffsetGreaterThanLength() {
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pepperoniPizza = new Str("pepperoni pizza", 16, 15);
 
     }
@@ -63,7 +63,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertNotEquals("Z", $pizza->charAt(2));
         $this->assertEquals("a", $pizza->charAt($pizza->length() - 1));
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pizza->charAt(-1);
         $pizza->charAt($pizza->length());
 
@@ -77,7 +77,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertNotEquals(ord("Z"), $pizza->charCodeAt(2));
         $this->assertEquals(ord("a"), $pizza->charCodeAt($pizza->length() - 1));
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pizza->charCodeAt(-1);
         $pizza->charCodeAt($pizza->length());
 
@@ -258,7 +258,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(" ", $pepperoniPizza[9]);
         $this->assertEquals("a", $pepperoniPizza[14]);
 
-        $this->setExpectedException('mscribellito\Str\StrIndexOutOfBoundsException');
+        $this->setExpectedException('mscribellito\StrIndexOutOfBoundsException');
         $this->assertEquals(null, $pepperoniPizza[-1]);
 
     }
@@ -436,7 +436,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pizza = new Str("pizza");
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pizza->startsWith("p", -1);
 
     }
@@ -445,7 +445,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pizza = new Str("pizza");
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pizza->startsWith("p", $pizza->length() + 1);
 
     }
@@ -454,7 +454,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pepperoniPizza->substring(-1);
 
     }
@@ -471,7 +471,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pepperoniPizza->substring($pepperoniPizza->length() + 1);
 
     }
@@ -496,7 +496,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pepperoniPizza->substring(0, $pepperoniPizza->length() + 1);
 
     }
@@ -505,7 +505,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->setExpectedException("mscribellito\Str\StrIndexOutOfBoundsException");
+        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
         $pepperoniPizza->substring(8, 4);
 
     }

@@ -13,7 +13,7 @@ Example Usage
 $pizza = new Str("pepperoni pizza");
 $desire = "pepperoni";
 if ($pizza->contains($desire)) {
-	echo $desire . " is the best!";
+  echo $desire . " is the best!"; // pepperoni is the best!
 }
 ```
 

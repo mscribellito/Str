@@ -1,5 +1,5 @@
 {
-    "name": "mscribellito/Str",
+    "name": "mscribellito/str",
     "type": "library",
     "description": "Str is a PHP class that wraps the native string functions in an effort to simplify string handling and manipulation.",
     "keywords": ["string", "str"],

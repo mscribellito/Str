@@ -10,8 +10,9 @@ Usage
 -----
 
 ```php
-$str = new Str("pizza!");
-echo $str; // pizza!
+require 'path/to/Str.php';
+use mscribellito\Str\Str;
+echo new Str("pizza!"); // pizza!
 ```
 
 Constructor Summary

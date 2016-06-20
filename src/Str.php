@@ -26,7 +26,7 @@
  * THE SOFTWARE.
  */
 
-namespace Str;
+namespace mscribellito;
 
 use ArrayAccess,
     Exception;

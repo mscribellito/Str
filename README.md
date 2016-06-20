@@ -1,5 +1,5 @@
-Str, PHP String Class
-=====================
+Str - PHP String Library
+========================
 
 What is Str?
 ------------

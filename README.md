@@ -10,8 +10,6 @@ Usage
 -----
 
 ```php
-require 'path/to/Str.php';
-use mscribellito\Str\Str;
 echo new Str("pizza!"); // pizza!
 ```
 

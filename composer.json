@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "mscribellito\\str\\": "src/"
+            "mscribellito": "src/"
         }
     }
 }

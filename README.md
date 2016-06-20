@@ -10,8 +10,11 @@ Example Usage
 -------------
 
 ```php
-$pizza = new Str("pizza!");
-echo $pizza->toUpperCase(); // PIZZA!
+$pizza = new Str("pepperoni pizza");
+$desire = "pepperoni";
+if ($pizza->contains($desire)) {
+	echo $desire . " is the best!";
+}
 ```
 
 Constructor Summary

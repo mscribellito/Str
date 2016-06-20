@@ -34,8 +34,8 @@ use ArrayAccess,
 /**
  * Str
  *
- * Str is a PHP class that wraps the native string functions in an effort to 
- * simplify string handling and manipulation. Str provides methods for examining 
+ * Str is a PHP library that provides convenient, object-oriented operations for
+ * string handling and manipulation. Str provides methods for examining 
  * individual characters of the string, for comparing strings, for searching 
  * strings, for extracting substrings, and for creating a copy of a string with 
  * all characters translated to uppercase or to lowercase. A Str is immutable 

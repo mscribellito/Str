@@ -24,21 +24,21 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     public function testConstructorWithOffsetLessThanZero() {
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         new Str("pizza", -1, 0);
 
     }
 
     public function testConstructorWithLengthLessThanZero() {
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         new Str("pizza", 0, -1);
 
     }
 
     public function testConstructorWithOffsetGreaterThanLength() {
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pepperoniPizza = new Str("pepperoni pizza", 16, 15);
 
     }
@@ -63,7 +63,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertNotEquals("Z", $pizza->charAt(2));
         $this->assertEquals("a", $pizza->charAt($pizza->length() - 1));
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pizza->charAt(-1);
         $pizza->charAt($pizza->length());
 
@@ -77,7 +77,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertNotEquals(ord("Z"), $pizza->charCodeAt(2));
         $this->assertEquals(ord("a"), $pizza->charCodeAt($pizza->length() - 1));
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pizza->charCodeAt(-1);
         $pizza->charCodeAt($pizza->length());
 
@@ -258,7 +258,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(" ", $pepperoniPizza[9]);
         $this->assertEquals("a", $pepperoniPizza[14]);
 
-        $this->setExpectedException('mscribellito\StrIndexOutOfBoundsException');
+        $this->setExpectedException('OutOfBoundsException');
         $this->assertEquals(null, $pepperoniPizza[-1]);
 
     }
@@ -436,7 +436,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pizza = new Str("pizza");
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pizza->startsWith("p", -1);
 
     }
@@ -445,7 +445,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pizza = new Str("pizza");
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pizza->startsWith("p", $pizza->length() + 1);
 
     }
@@ -454,7 +454,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pepperoniPizza->substring(-1);
 
     }
@@ -471,7 +471,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pepperoniPizza->substring($pepperoniPizza->length() + 1);
 
     }
@@ -496,7 +496,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pepperoniPizza->substring(0, $pepperoniPizza->length() + 1);
 
     }
@@ -505,7 +505,7 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
         $pepperoniPizza = new Str("pepperoni pizza");
 
-        $this->setExpectedException("mscribellito\StrIndexOutOfBoundsException");
+        $this->setExpectedException("OutOfBoundsException");
         $pepperoniPizza->substring(8, 4);
 
     }

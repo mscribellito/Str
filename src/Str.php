@@ -29,7 +29,8 @@
 namespace mscribellito;
 
 use ArrayAccess,
-    Exception;
+    Exception,
+    OutOfBoundsException;
 
 /**
  * Str
@@ -69,7 +70,7 @@ class Str implements ArrayAccess {
      * @param mixed $original a string
      * @param int $offset the initial offset
      * @param int $count the length
-     * @throws StrIndexOutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function __construct($original = "", $offset = null, $count = null) {
 
@@ -78,13 +79,13 @@ class Str implements ArrayAccess {
 
         if ($offset !== null && $count !== null) {
             if ($offset < 0) {
-                throw new StrIndexOutOfBoundsException($offset);
+                throw new OutOfBoundsException($offset);
             }
             if ($count < 0) {
-                throw new StrIndexOutOfBoundsException($count);
+                throw new OutOfBoundsException($count);
             }
             if ($offset > $length - $count) {
-                throw new StrIndexOutOfBoundsException($offset + $count);
+                throw new OutOfBoundsException($offset + $count);
             }
             $value = substr($value, $offset, $count);
         }
@@ -110,12 +111,12 @@ class Str implements ArrayAccess {
      *
      * @param int $index the index of the character
      * @return string the character at the specified index of this string.
-     * @throws StrIndexOutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function charAt($index) {
 
         if ($index < 0 || $index >= $this->length) {
-            throw new StrIndexOutOfBoundsException($index);
+            throw new OutOfBoundsException($index);
         }
 
         return $this->value[$index];
@@ -127,7 +128,7 @@ class Str implements ArrayAccess {
      *
      * @param int $index the index to the character
      * @return int the ASCII value of the character at the index.
-     * @throws StrIndexOutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function charCodeAt($index) {
 
@@ -170,8 +171,9 @@ class Str implements ArrayAccess {
     public function concat() {
 
         $value = $this->value;
+        $count = func_num_args();
 
-        for ($i = 0; $i < func_num_args(); $i++) {
+        for ($i = 0; $i < $count; $i++) {
             $value .= (string) func_get_arg($i);
         }
 
@@ -362,7 +364,7 @@ class Str implements ArrayAccess {
      *
      * @param int $offset the index
      * @return string the character at the specified index.
-     * @throws StrIndexOutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function offsetGet($offset) {
 
@@ -407,7 +409,7 @@ class Str implements ArrayAccess {
      * @param bool $ignoreCase if true, ignore case
      * @return bool true if the specified subregion of this string matches the
      * specified subregion of the string argument; false otherwise.
-     * @throws StrIndexOutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function regionMatches($toffset, $str, $ooffset, $length, $ignoreCase = false) {
 
@@ -494,7 +496,7 @@ class Str implements ArrayAccess {
      * @param string $prefix the prefix
      * @param int $toffset the index to start the search from
      * @return bool true if the string starts with the specified prefix.
-     * @throws StrIndexOutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function startsWith($prefix, $toffset = 0) {
 
@@ -508,12 +510,12 @@ class Str implements ArrayAccess {
      * @param int $beginIndex the beginning index, inclusive
      * @param int $endIndex the ending index, exclusive
      * @return \Str the specified substring.
-     * @throws StrIndexOutOfBoundsException
+     * @throws OutOfBoundsException
      */
     public function substring($beginIndex, $endIndex = null) {
 
         if ($beginIndex < 0) {
-            throw new StrIndexOutOfBoundsException($beginIndex);
+            throw new OutOfBoundsException($beginIndex);
         } else if ($beginIndex === $this->length) {
             return new static("");
         }
@@ -521,7 +523,7 @@ class Str implements ArrayAccess {
         if ($endIndex === null) {
             $length = $this->length - $beginIndex;
             if ($length < 0) {
-                throw new StrIndexOutOfBoundsException($length);
+                throw new OutOfBoundsException($length);
             }
             if ($beginIndex === 0) {
                 return $this;
@@ -530,11 +532,11 @@ class Str implements ArrayAccess {
             }
         } else {
             if ($endIndex > $this->length) {
-                throw new StrIndexOutOfBoundsException($endIndex);
+                throw new OutOfBoundsException($endIndex);
             }
             $length = $endIndex - $beginIndex;
             if ($length < 0) {
-                throw new StrIndexOutOfBoundsException($length);
+                throw new OutOfBoundsException($length);
             }
             if ($beginIndex === 0 && $endIndex === $this->length) {
                 return $this;
@@ -592,26 +594,6 @@ class Str implements ArrayAccess {
     public function trim($characterMask = " \t\n\r\0\x0B") {
 
         return new static(trim($this->value, $characterMask));
-
-    }
-
-}
-
-/**
- * Thrown by String methods to indicate that an index is either negative or
- * greater than the size of the string.
- */
-class StrIndexOutOfBoundsException extends Exception {
-
-    /**
-     * Constructs a new StrIndexOutOfBoundsException class with an argument
-     * indicating the illegal index.
-     *
-     * @param int $index the illegal index
-     */
-    public function __construct($index) {
-
-        parent::__construct("String index out of range: " . $index, 0, null);
 
     }
 

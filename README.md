@@ -17,7 +17,15 @@ PHP version 5.3 or newer is required.
 Installing
 ----------
 
-Install via composer: `composer require mscribellito/str`
+Install via Composer:
+```
+composer require mscribellito/str
+```
+
+Require:
+```php
+require 'path/to/Str.php';
+```
 
 Example Usage
 -------------
@@ -28,6 +36,14 @@ $desire = "pepperoni";
 if ($pizza->contains($desire)) {
   echo $desire . " is the best!"; // pepperoni is the best!
 }
+```
+
+Chaining
+--------
+
+```php
+$str = new Str('php');
+echo $str->toUpperCase()->concat(' is fun!'); // PHP is fun!
 ```
 
 Constructor Summary

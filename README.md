@@ -1,6 +1,9 @@
 Str - PHP String Library
 ========================
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/mscribellito/str.svg?style=flat-square)](https://packagist.org/packages/mscribellito/str)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+
 What is Str?
 ------------
 

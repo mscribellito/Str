@@ -31,10 +31,11 @@ Example Usage
 -------------
 
 ```php
-$pizza = new Str("pepperoni pizza");
-$desire = "pepperoni";
-if ($pizza->contains($desire)) {
-  echo $desire . " is the best!"; // pepperoni is the best!
+$lipsum = new Str("Lorem ipsum dolor sit amet");
+$search = "ipsum";
+if ($lipsum->contains($search)) {
+    printf("'%s' contains '%s'", $lipsum, $search);
+    // 'Lorem ipsum dolor sit amet' contains 'ipsum'
 }
 ```
 
@@ -43,7 +44,8 @@ Chaining
 
 ```php
 $str = new Str('php');
-echo $str->toUpperCase()->concat(' is fun!'); // PHP is fun!
+echo $str->toUpperCase()->concat(' is a popular general-purpose scripting language');
+// PHP is a popular general-purpose scripting language
 ```
 
 Constructor Summary

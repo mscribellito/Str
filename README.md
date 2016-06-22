@@ -12,7 +12,7 @@ What is Str?
 
 Requirements
 ------------
-PHP version 5.3 or newer is required.
+PHP version 5.5 or newer is required.
 
 Installing
 ----------

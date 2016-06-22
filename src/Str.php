@@ -75,7 +75,6 @@ class Str implements ArrayAccess {
     public function __construct($original = "", $offset = null, $count = null) {
 
         $value = (string) $original;
-        $length = strlen($value);
 
         if ($offset !== null && $count !== null) {
             if ($offset < 0) {
@@ -90,7 +89,7 @@ class Str implements ArrayAccess {
             $value = substr($value, $offset, $count);
         }
 
-        $this->value = $value;
+        $this->value = strlen($value);
         $this->length = $length;
 
     }

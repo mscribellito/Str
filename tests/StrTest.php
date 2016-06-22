@@ -13,14 +13,14 @@ class StrTest extends \PHPUnit_Framework_TestCase {
     public function testConstructor() {
 
         $lipsum = new Str(self::LIPSUM);
-        $this->assertInstanceOf(\mscribellito\Str::class, $lipsum);
+        $this->assertInstanceOf("mscribellito\Str", $lipsum);
 
     }
 
     public function testConstructorWithOffsetAndLength() {
 
         $lipsum1 = new Str(self::LIPSUM, 0, 5);
-        $this->assertInstanceOf(\mscribellito\Str::class, $lipsum1);
+        $this->assertInstanceOf("mscribellito\Str", $lipsum1);
 
         $lipsum2 = new Str(self::LIPSUM);
         $this->assertEquals(56, $lipsum2->length());
@@ -174,8 +174,8 @@ class StrTest extends \PHPUnit_Framework_TestCase {
 
     public function testEquals() {
 
-        $lowerLipsum = (new Str(self::LIPSUM))->toLowerCase();
-        $upperLipsum = (new Str(self::LIPSUM))->toUpperCase();
+        $lowerLipsum = new Str(strtolower(self::LIPSUM));
+        $upperLipsum = new Str(strtoupper(self::LIPSUM));
 
         $this->assertTrue($lowerLipsum->equals($lowerLipsum));
         $this->assertTrue($lowerLipsum->equals(strtolower(self::LIPSUM)));
@@ -190,8 +190,8 @@ class StrTest extends \PHPUnit_Framework_TestCase {
 
     public function testEqualsIgnoreCase() {
 
-        $lowerLipsum = (new Str(self::LIPSUM))->toLowerCase();
-        $upperLipsum = (new Str(self::LIPSUM))->toUpperCase();
+        $lowerLipsum = new Str(strtolower(self::LIPSUM));
+        $upperLipsum = new Str(strtoupper(self::LIPSUM));
 
         $this->assertTrue($lowerLipsum->equalsIgnoreCase($lowerLipsum));
         $this->assertTrue($lowerLipsum->equalsIgnoreCase(strtoupper(self::LIPSUM)));
@@ -314,7 +314,7 @@ class StrTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(-1, $lipsum->lastIndexOf("L", -1));
         $this->assertEquals(-1, $lipsum->lastIndexOf(".", 56));
         $this->assertEquals(0, $lipsum->lastIndexOf("L"));
-        $this->assertEquals(54, $lipsum->lastIndexOf("t"));        
+        $this->assertEquals(54, $lipsum->lastIndexOf("t"));
         $this->assertEquals(36, $lipsum->lastIndexOf("t", 20));
 
     }

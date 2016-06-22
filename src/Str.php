@@ -311,8 +311,6 @@ class Str implements ArrayAccess {
         } else if ($fromIndex !== 0) {
             $fromIndex = -1 * $fromIndex;
         }
-        
-        echo $fromIndex;
 
         $index = strrpos($this->value, (string) $str, $fromIndex);
 

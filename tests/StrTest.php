@@ -220,10 +220,13 @@ class StrTest extends \PHPUnit_Framework_TestCase {
 
         $lipsum = new Str(self::LIPSUM);
 
+        $this->assertEquals(-1, $lipsum->indexOf("L", -1));
+        $this->assertEquals(-1, $lipsum->indexOf(".", 56));
+
         $this->assertEquals(0, $lipsum->indexOf("L"));
+        $this->assertEquals(-1, $lipsum->indexOf("L", 1));
         $this->assertEquals(55, $lipsum->indexOf("."));
-        $this->assertEquals(10, $lipsum->indexOf("m", 5));
-        $this->assertEquals(-1, $lipsum->indexOf("z"));
+        $this->assertEquals(-1, $lipsum->indexOf(".", 56));
 
     }
 
@@ -231,7 +234,7 @@ class StrTest extends \PHPUnit_Framework_TestCase {
 
         $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(0, $lipsum->indexOf("L", -1));
+        $this->assertEquals(-1, $lipsum->indexOf("L", -1));
 
     }
 
@@ -308,10 +311,11 @@ class StrTest extends \PHPUnit_Framework_TestCase {
 
         $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(54, $lipsum->lastIndexOf("t"));
-        $this->assertEquals(53, $lipsum->lastIndexOf("i"));
-        $this->assertEquals(1, $lipsum->lastIndexOf("o", 5));
-        $this->assertEquals(-1, $lipsum->lastIndexOf("z"));
+        $this->assertEquals(-1, $lipsum->lastIndexOf("L", -1));
+        $this->assertEquals(-1, $lipsum->lastIndexOf(".", 56));
+        $this->assertEquals(0, $lipsum->lastIndexOf("L"));
+        $this->assertEquals(54, $lipsum->lastIndexOf("t"));        
+        $this->assertEquals(36, $lipsum->lastIndexOf("t", 20));
 
     }
 

@@ -259,9 +259,7 @@ class Str implements ArrayAccess {
      */
     public function indexOf($str, $fromIndex = 0) {
 
-        if ($fromIndex < 0) {
-            $fromIndex = 0;
-        } else if ($fromIndex >= $this->length) {
+        if ($fromIndex < 0 || $fromIndex >= $this->length) {
             return -1;
         }
 
@@ -311,8 +309,10 @@ class Str implements ArrayAccess {
         if ($fromIndex < 0 || $fromIndex >= $this->length) {
             return -1;
         } else if ($fromIndex !== 0) {
-            $fromIndex = -1 * abs($this->length - $fromIndex);
+            $fromIndex = -1 * $fromIndex;
         }
+        
+        echo $fromIndex;
 
         $index = strrpos($this->value, (string) $str, $fromIndex);
 

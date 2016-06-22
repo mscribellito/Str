@@ -6,9 +6,9 @@ require __DIR__ . "/../src/Str.php";
 
 class StrTest extends \PHPUnit_Framework_TestCase {
 
-    const LOREM_IPSUM = "Lorem ipsum";
     const LIPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
     const LIPSUM_EXTRA = "Donec sed vestibulum massa.";
+    const LOREM_IPSUM = "Lorem ipsum";
 
     public function testConstructor() {
 

@@ -75,6 +75,7 @@ class Str implements ArrayAccess {
     public function __construct($original = "", $offset = null, $count = null) {
 
         $value = (string) $original;
+        $length = strlen($value);
 
         if ($offset !== null && $count !== null) {
             if ($offset < 0) {
@@ -176,7 +177,7 @@ class Str implements ArrayAccess {
             $value .= (string) func_get_arg($i);
         }
 
-        return new static($value);
+        return new self($value);
 
     }
 
@@ -240,10 +241,10 @@ class Str implements ArrayAccess {
     public static function format($format) {
 
         if (func_num_args() === 1) {
-            return new static($format);
+            return new self($format);
         }
 
-        return new static(call_user_func_array("sprintf", func_get_args()));
+        return new self(call_user_func_array("sprintf", func_get_args()));
 
     }
 
@@ -292,7 +293,7 @@ class Str implements ArrayAccess {
      */
     public static function join($delimiter, $elements) {
 
-        return new static(implode($delimiter, $elements));
+        return new self(implode($delimiter, $elements));
 
     }
 
@@ -307,10 +308,10 @@ class Str implements ArrayAccess {
      */
     public function lastIndexOf($str, $fromIndex = 0) {
 
-        if ($fromIndex < 0) {
-            $fromIndex = 0;
-        } else if ($fromIndex >= $this->length) {
+        if ($fromIndex < 0 || $fromIndex >= $this->length) {
             return -1;
+        } else if ($fromIndex !== 0) {
+            $fromIndex = -1 * abs($this->length - $fromIndex);
         }
 
         $index = strrpos($this->value, (string) $str, $fromIndex);
@@ -412,7 +413,7 @@ class Str implements ArrayAccess {
      */
     public function regionMatches($toffset, $str, $ooffset, $length, $ignoreCase = false) {
 
-        $other = new static($str);
+        $other = new self($str);
 
         if ($ignoreCase === true) {
             return strncasecmp($this->substring($toffset), $other->substring($ooffset), $length) === 0;
@@ -432,7 +433,7 @@ class Str implements ArrayAccess {
      */
     public function replace($target, $replacement) {
 
-        return new static(str_replace($target, $replacement, $this->value));
+        return new self(str_replace($target, $replacement, $this->value));
 
     }
 
@@ -446,7 +447,7 @@ class Str implements ArrayAccess {
      */
     public function replaceAll($regex, $replacement) {
 
-        return new static(preg_replace($regex, $replacement, $this->value));
+        return new self(preg_replace($regex, $replacement, $this->value));
 
     }
 
@@ -460,7 +461,7 @@ class Str implements ArrayAccess {
      */
     public function replaceFirst($regex, $replacement) {
 
-        return new static(preg_replace($regex, $replacement, $this->value, 1));
+        return new self(preg_replace($regex, $replacement, $this->value, 1));
 
     }
 
@@ -481,7 +482,7 @@ class Str implements ArrayAccess {
         $parts = preg_split($regex, $this->value, $limit);
 
         for ($i = 0, $l = count($parts); $i < $l; $i++) {
-            $parts[$i] = new static($parts[$i]);
+            $parts[$i] = new self($parts[$i]);
         }
 
         return $parts;
@@ -516,7 +517,7 @@ class Str implements ArrayAccess {
         if ($beginIndex < 0) {
             throw new OutOfBoundsException($beginIndex);
         } else if ($beginIndex === $this->length) {
-            return new static("");
+            return new self("");
         }
 
         if ($endIndex === null) {
@@ -527,7 +528,7 @@ class Str implements ArrayAccess {
             if ($beginIndex === 0) {
                 return $this;
             } else {
-                return new static($this->value, $beginIndex, $length);
+                return new self($this->value, $beginIndex, $length);
             }
         } else {
             if ($endIndex > $this->length) {
@@ -540,7 +541,7 @@ class Str implements ArrayAccess {
             if ($beginIndex === 0 && $endIndex === $this->length) {
                 return $this;
             } else {
-                return new static($this->value, $beginIndex, $length);
+                return new self($this->value, $beginIndex, $length);
             }
         }
 
@@ -566,7 +567,7 @@ class Str implements ArrayAccess {
      */
     public function toLowerCase() {
 
-        return new static(strtolower($this->value));
+        return new self(strtolower($this->value));
 
     }
 
@@ -577,7 +578,7 @@ class Str implements ArrayAccess {
      */
     public function toUpperCase() {
 
-        return new static(strtoupper($this->value));
+        return new self(strtoupper($this->value));
 
     }
 
@@ -592,7 +593,7 @@ class Str implements ArrayAccess {
      */
     public function trim($characterMask = " \t\n\r\0\x0B") {
 
-        return new static(trim($this->value, $characterMask));
+        return new self(trim($this->value, $characterMask));
 
     }
 

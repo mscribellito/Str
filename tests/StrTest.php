@@ -2,135 +2,140 @@
 
 namespace mscribellito;
 
-use PHPUnit_Framework_TestCase;
-
 require __DIR__ . "/../src/Str.php";
 
-class StrTest extends PHPUnit_Framework_TestCase {
+class StrTest extends \PHPUnit_Framework_TestCase {
+
+    const LOREM_IPSUM = "Lorem ipsum";
+    const LIPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+    const LIPSUM_EXTRA = "Donec sed vestibulum massa.";
 
     public function testConstructor() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
-        $this->assertInstanceOf("mscribellito\Str", $pepperoniPizza);
+        $lipsum = new Str(self::LIPSUM);
+        $this->assertInstanceOf(\mscribellito\Str::class, $lipsum);
 
     }
 
     public function testConstructorWithOffsetAndLength() {
 
-        $pepperoniPizza = new Str(" pepperoni pizza ", 1, 15);
-        $this->assertInstanceOf("mscribellito\Str", $pepperoniPizza);
+        $lipsum1 = new Str(self::LIPSUM, 0, 5);
+        $this->assertInstanceOf(\mscribellito\Str::class, $lipsum1);
+
+        $lipsum2 = new Str(self::LIPSUM);
+        $this->assertEquals(56, $lipsum2->length());
+
+        $lipsum3 = new Str(self::LIPSUM, 0, 5);
+        $this->assertEquals(5, $lipsum3->length());
 
     }
 
     public function testConstructorWithOffsetLessThanZero() {
 
         $this->setExpectedException("OutOfBoundsException");
-        new Str("pizza", -1, 0);
+        new Str(self::LIPSUM, -1, 0);
 
     }
 
     public function testConstructorWithLengthLessThanZero() {
 
         $this->setExpectedException("OutOfBoundsException");
-        new Str("pizza", 0, -1);
+        new Str(self::LIPSUM, 0, -1);
 
     }
 
     public function testConstructorWithOffsetGreaterThanLength() {
 
         $this->setExpectedException("OutOfBoundsException");
-        $pepperoniPizza = new Str("pepperoni pizza", 16, 15);
+        new Str(self::LIPSUM, 57, 0);
 
     }
 
     public function testToString() {
 
-        $pizza = new Str("pizza");
-        $nullPizza = new Str();
-        $emptyPizza = new Str("");
+        $lipsum = new Str(self::LIPSUM);
+        $null = new Str();
+        $empty = new Str("");
 
-        $this->assertEquals("pizza", $pizza);
-        $this->assertEquals("", $nullPizza);
-        $this->assertEquals("", $emptyPizza);
+        $this->assertEquals(self::LIPSUM, $lipsum);
+        $this->assertEquals("", $null);
+        $this->assertEquals("", $empty);
 
     }
 
     public function testCharAt() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals("p", $pizza->charAt(0));
-        $this->assertNotEquals("Z", $pizza->charAt(2));
-        $this->assertEquals("a", $pizza->charAt($pizza->length() - 1));
+        $this->assertEquals("L", $lipsum->charAt(0));
+        $this->assertNotEquals("O", $lipsum->charAt(1));
+        $this->assertEquals(".", $lipsum->charAt($lipsum->length() - 1));
 
         $this->setExpectedException("OutOfBoundsException");
-        $pizza->charAt(-1);
-        $pizza->charAt($pizza->length());
+        $lipsum->charAt(-1);
+        $lipsum->charAt($lipsum->length());
 
     }
 
     public function testCharCodeAt() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(ord("p"), $pizza->charCodeAt(0));
-        $this->assertNotEquals(ord("Z"), $pizza->charCodeAt(2));
-        $this->assertEquals(ord("a"), $pizza->charCodeAt($pizza->length() - 1));
+        $this->assertEquals(ord("L"), $lipsum->charCodeAt(0));
+        $this->assertNotEquals(ord("O"), $lipsum->charCodeAt(1));
+        $this->assertEquals(ord("."), $lipsum->charCodeAt($lipsum->length() - 1));
 
         $this->setExpectedException("OutOfBoundsException");
-        $pizza->charCodeAt(-1);
-        $pizza->charCodeAt($pizza->length());
+        $lipsum->charCodeAt(-1);
+        $lipsum->charCodeAt($lipsum->length());
 
     }
 
     public function testCompareTo() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
-        $cheesePizza = new Str("cheese pizza");
-        $bananaPepperPizza = new Str("banana pepper pizza");
+        $lorem = new Str("lorem");
+        $ipsum = new Str("ipsum");
+        $dolor = new Str("dolor");
 
-        $this->assertGreaterThanOrEqual(1, $pepperoniPizza->compareTo($cheesePizza));
-        $this->assertGreaterThanOrEqual(1, $pepperoniPizza->compareTo($bananaPepperPizza));
-        $this->assertGreaterThanOrEqual(1, $cheesePizza->compareTo($bananaPepperPizza));
+        $this->assertGreaterThanOrEqual(1, $lorem->compareTo($ipsum));
+        $this->assertGreaterThanOrEqual(1, $lorem->compareTo($dolor));
+        $this->assertGreaterThanOrEqual(1, $ipsum->compareTo($dolor));
 
-        $this->assertLessThanOrEqual(-1, $cheesePizza->compareTo($pepperoniPizza));
-        $this->assertLessThanOrEqual(-1, $bananaPepperPizza->compareTo($pepperoniPizza));
-        $this->assertLessThanOrEqual(-1, $bananaPepperPizza->compareTo($cheesePizza));
+        $this->assertLessThanOrEqual(-1, $ipsum->compareTo($lorem));
+        $this->assertLessThanOrEqual(-1, $dolor->compareTo($lorem));
+        $this->assertLessThanOrEqual(-1, $dolor->compareTo($ipsum));
 
-        $this->assertEquals(0, $pepperoniPizza->compareTo("pepperoni pizza"));
-        $this->assertEquals(0, $pepperoniPizza->compareTo($pepperoniPizza));
+        $this->assertEquals(0, $lorem->compareTo("lorem"));
+        $this->assertEquals(0, $lorem->compareTo($lorem));
 
-        $this->assertEquals(0, $cheesePizza->compareTo("cheese pizza"));
-        $this->assertEquals(0, $cheesePizza->compareTo($cheesePizza));
+        $this->assertEquals(0, $ipsum->compareTo("ipsum"));
+        $this->assertEquals(0, $ipsum->compareTo($ipsum));
 
-        $this->assertEquals(0, $bananaPepperPizza->compareTo("banana pepper pizza"));
-        $this->assertEquals(0, $bananaPepperPizza->compareTo($bananaPepperPizza));
-
-        $str = new Str("1234");
-        $this->assertEquals(0, $str->compareTo(1234));
+        $this->assertEquals(0, $dolor->compareTo("dolor"));
+        $this->assertEquals(0, $dolor->compareTo($dolor));
 
     }
 
     public function testCompareToIgnoreCase() {
 
-        $smallPepperoniPizza = new Str("pepperoni pizza");
-        $largePepperoniPizza = new Str("PEPPERONI PIZZA");
-        $smallCheesePizza = new Str("cheese pizza");
-        $largeCheesePizza = new Str("CHEESE PIZZA");
+        $lowerLorem = new Str("lorem");
+        $upperLorem = new Str("LOREM");
+        $lowerIpsum = new Str("ipsum");
+        $upperIpsum = new Str("IPSUM");
 
-        $this->assertGreaterThanOrEqual(1, $smallPepperoniPizza->compareToIgnoreCase($largeCheesePizza));
-        $this->assertGreaterThanOrEqual(1, $largePepperoniPizza->compareToIgnoreCase($smallCheesePizza));
+        $this->assertGreaterThanOrEqual(1, $lowerLorem->compareToIgnoreCase($upperIpsum));
+        $this->assertGreaterThanOrEqual(1, $upperLorem->compareToIgnoreCase($lowerIpsum));
 
-        $this->assertLessThanOrEqual(-1, $smallCheesePizza->compareToIgnoreCase($smallPepperoniPizza));
-        $this->assertLessThanOrEqual(-1, $largeCheesePizza->compareToIgnoreCase($largePepperoniPizza));
+        $this->assertLessThanOrEqual(-1, $lowerIpsum->compareToIgnoreCase($lowerLorem));
+        $this->assertLessThanOrEqual(-1, $upperIpsum->compareToIgnoreCase($upperLorem));
 
-        $this->assertEquals(0, $smallPepperoniPizza->compareToIgnoreCase($largePepperoniPizza));
-        $this->assertEquals(0, $smallPepperoniPizza->compareToIgnoreCase("PEPPERONI PIZZA"));
-        $this->assertEquals(0, $largePepperoniPizza->compareToIgnoreCase("pepperoni pizza"));
+        $this->assertEquals(0, $lowerLorem->compareToIgnoreCase($upperLorem));
+        $this->assertEquals(0, $lowerLorem->compareToIgnoreCase("LOREM"));
+        $this->assertEquals(0, $upperLorem->compareToIgnoreCase("lorem"));
 
-        $this->assertEquals(0, $smallCheesePizza->compareToIgnoreCase($largeCheesePizza));
-        $this->assertEquals(0, $smallCheesePizza->compareToIgnoreCase("CHEESE PIZZA"));
-        $this->assertEquals(0, $largeCheesePizza->compareToIgnoreCase("cheese pizza"));
+        $this->assertEquals(0, $lowerIpsum->compareToIgnoreCase($upperIpsum));
+        $this->assertEquals(0, $lowerIpsum->compareToIgnoreCase("ipsum"));
+        $this->assertEquals(0, $upperIpsum->compareToIgnoreCase("IPSUM"));
 
         $str = new Str("1234");
         $this->assertEquals(0, $str->compareToIgnoreCase(1234));
@@ -139,422 +144,414 @@ class StrTest extends PHPUnit_Framework_TestCase {
 
     public function testConcat() {
 
-        $pepperoni = new Str("pepperoni");
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
+        $extra = new Str(self::LIPSUM_EXTRA);
 
-        $this->assertEquals("pepperoni pizza", $pepperoni->concat(" ")->concat($pizza));
+        $this->assertEquals(self::LIPSUM . " " . self::LIPSUM_EXTRA, $lipsum->concat(" ")->concat($extra));
+        $this->assertEquals(self::LIPSUM . " " . self::LIPSUM_EXTRA, $lipsum->concat(" ")->concat(self::LIPSUM_EXTRA));
 
     }
 
     public function testContains() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertTrue($pepperoniPizza->contains("pepperoni"));
-        $this->assertFalse($pepperoniPizza->contains("anchovies"));
+        $this->assertTrue($lipsum->contains("Lorem"));
+        $this->assertFalse($lipsum->contains("Donec"));
 
     }
 
     public function testEndsWith() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertTrue($pizza->endsWith("a"));
-        $this->assertTrue($pizza->endsWith("za"));
-        $this->assertFalse($pizza->endsWith("p"));
-        $this->assertFalse($pizza->endsWith("pi"));
+        $this->assertTrue($lipsum->endsWith("."));
+        $this->assertTrue($lipsum->endsWith("t."));
+        $this->assertFalse($lipsum->endsWith("L"));
+        $this->assertFalse($lipsum->endsWith("Lo"));
 
     }
 
     public function testEquals() {
 
-        $smallPizza = new Str("pizza");
-        $largePizza = new Str("PIZZA");
+        $lowerLipsum = (new Str(self::LIPSUM))->toLowerCase();
+        $upperLipsum = (new Str(self::LIPSUM))->toUpperCase();
 
-        $this->assertTrue($smallPizza->equals($smallPizza));
-        $this->assertTrue($smallPizza->equals("pizza"));
+        $this->assertTrue($lowerLipsum->equals($lowerLipsum));
+        $this->assertTrue($lowerLipsum->equals(strtolower(self::LIPSUM)));
 
-        $this->assertFalse($smallPizza->equals($largePizza));
-        $this->assertFalse($largePizza->equals($smallPizza));
+        $this->assertFalse($lowerLipsum->equals($upperLipsum));
+        $this->assertFalse($upperLipsum->equals($lowerLipsum));
 
-        $this->assertTrue($largePizza->equals($largePizza));
-        $this->assertTrue($largePizza->equals("PIZZA"));
-
-        $str = new Str("1234");
-        $this->assertTrue($str->equals(1234));
+        $this->assertTrue($upperLipsum->equals($upperLipsum));
+        $this->assertTrue($upperLipsum->equals(strtoupper(self::LIPSUM)));
 
     }
 
     public function testEqualsIgnoreCase() {
 
-        $smallPizza = new Str("pizza");
-        $largePizza = new Str("PIZZA");
+        $lowerLipsum = (new Str(self::LIPSUM))->toLowerCase();
+        $upperLipsum = (new Str(self::LIPSUM))->toUpperCase();
 
-        $this->assertTrue($smallPizza->equalsIgnoreCase($smallPizza));
-        $this->assertTrue($smallPizza->equalsIgnoreCase("PIZZA"));
+        $this->assertTrue($lowerLipsum->equalsIgnoreCase($lowerLipsum));
+        $this->assertTrue($lowerLipsum->equalsIgnoreCase(strtoupper(self::LIPSUM)));
 
-        $this->assertTrue($smallPizza->equalsIgnoreCase($largePizza));
-        $this->assertTrue($largePizza->equalsIgnoreCase($smallPizza));
+        $this->assertTrue($lowerLipsum->equalsIgnoreCase($upperLipsum));
+        $this->assertTrue($upperLipsum->equalsIgnoreCase($lowerLipsum));
 
-        $this->assertTrue($largePizza->equalsIgnoreCase($largePizza));
-        $this->assertTrue($largePizza->equalsIgnoreCase("pizza"));
-
-        $str = new Str("1234");
-        $this->assertTrue($str->equalsIgnoreCase(1234));
+        $this->assertTrue($upperLipsum->equalsIgnoreCase($upperLipsum));
+        $this->assertTrue($upperLipsum->equalsIgnoreCase(strtolower(self::LIPSUM)));
 
     }
 
     public function testFormat() {
 
-        $pepperoniPizza = Str::format("%s %s", "pepperoni", "pizza");
+        $args = explode(" ", self::LIPSUM);
+        $format = implode(" ", array_fill(0, count($args), "%s"));
+        array_unshift($args, $format);
 
-        $this->assertTrue($pepperoniPizza->equals("pepperoni pizza"));
+        $lipsum = call_user_func_array([__NAMESPACE__ . "\Str", "format"], $args);
+
+        $this->assertTrue($lipsum->equals(self::LIPSUM));
 
     }
 
     public function testIndexOf() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(0, $pizza->indexOf("p"));
-        $this->assertEquals(4, $pizza->indexOf("a"));
-        $this->assertEquals(3, $pizza->indexOf("z", 3));
-        $this->assertEquals(-1, $pizza->indexOf(" "));
+        $this->assertEquals(0, $lipsum->indexOf("L"));
+        $this->assertEquals(55, $lipsum->indexOf("."));
+        $this->assertEquals(10, $lipsum->indexOf("m", 5));
+        $this->assertEquals(-1, $lipsum->indexOf("z"));
 
     }
 
     public function testIndexOfFromIndexLessThanZero() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(0, $pizza->indexOf("p", -1));
+        $this->assertEquals(0, $lipsum->indexOf("L", -1));
 
     }
 
     public function testIndexOfFromIndexGreaterThanOrEqualToLength() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(-1, $pizza->indexOf("p", $pizza->length()));
+        $this->assertEquals(-1, $lipsum->indexOf("L", $lipsum->length()));
 
     }
 
     public function testInterfaceArrayAccessOffsetExists() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertTrue(isset($pepperoniPizza[0]), true);
-        $this->assertTrue(isset($pepperoniPizza[14]), true);
-        $this->assertFalse(isset($pepperoniPizza[-1]), false);
-        $this->assertFalse(isset($pepperoniPizza[15]), false);
+        $this->assertTrue(isset($lipsum[0]), true);
+        $this->assertTrue(isset($lipsum[55]), true);
+        $this->assertFalse(isset($lipsum[-1]), false);
+        $this->assertFalse(isset($lipsum[56]), false);
 
     }
 
     public function testInterfaceArrayAccessOffsetGet() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals("p", $pepperoniPizza[0]);
-        $this->assertEquals(" ", $pepperoniPizza[9]);
-        $this->assertEquals("a", $pepperoniPizza[14]);
+        $this->assertEquals("L", $lipsum[0]);
+        $this->assertEquals(".", $lipsum[55]);
 
-        $this->setExpectedException('OutOfBoundsException');
-        $this->assertEquals(null, $pepperoniPizza[-1]);
+        $this->setExpectedException("OutOfBoundsException");
+        $this->assertEquals(null, $lipsum[-1]);
 
     }
 
     public function testInterfaceArrayAccessOffsetSet() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('Exception');
-        $pepperoniPizza[0] = "a";
+        $this->setExpectedException("Exception");
+        $lipsum[0] = " ";
 
     }
 
     public function testInterfaceArrayAccessOffsetUnset() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('Exception');
-        unset($pepperoniPizza[0]);
+        $this->setExpectedException("Exception");
+        unset($lipsum[0]);
 
     }
 
     public function testIsEmpty() {
 
-        $pizza = new Str("pizza");
-        $nullPizza = new Str();
-        $emptyPizza = new Str("");
+        $lipsum = new Str(self::LIPSUM);
+        $null = new Str();
+        $empty = new Str("");
 
-        $this->assertFalse($pizza->isEmpty());
-        $this->assertTrue($nullPizza->isEmpty());
-        $this->assertTrue($emptyPizza->isEmpty());
+        $this->assertFalse($lipsum->isEmpty());
+        $this->assertTrue($null->isEmpty());
+        $this->assertTrue($empty->isEmpty());
 
     }
 
     public function testJoin() {
 
-        $pepperoniPizza = Str::join(" ", array("pepperoni", "pizza"));
-        $pepperoniPizzaIngredients = Str::join(", ", array("crust", "sauce", "cheese", "pepperoni"));
+        $lipsum = Str::join(" ", explode(" ", self::LIPSUM));
 
-        $this->assertEquals("pepperoni pizza", $pepperoniPizza);
-        $this->assertEquals("crust, sauce, cheese, pepperoni", $pepperoniPizzaIngredients);
+        $this->assertEquals(self::LIPSUM, $lipsum);
 
     }
 
     public function testLastIndexOf() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(3, $pizza->lastIndexOf("z"));
-        $this->assertEquals(4, $pizza->lastIndexOf("a"));
-        $this->assertEquals(3, $pizza->lastIndexOf("z", 3));
-        $this->assertEquals(-1, $pizza->lastIndexOf(" "));
-
-        $pizzaPizza = new Str("pizza pizza");
+        $this->assertEquals(54, $lipsum->lastIndexOf("t"));
+        $this->assertEquals(53, $lipsum->lastIndexOf("i"));
+        $this->assertEquals(1, $lipsum->lastIndexOf("o", 5));
+        $this->assertEquals(-1, $lipsum->lastIndexOf("z"));
 
     }
 
     public function testLastIndexOfFromIndexLessThanZero() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(3, $pizza->lastIndexOf("z", -1));
+        $this->assertEquals(-1, $lipsum->lastIndexOf(".", -1));
 
     }
 
     public function testLastIndexOfFromIndexGreaterThanOrEqualToLength() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(-1, $pizza->lastIndexOf("z", $pizza->length()));
+        $this->assertEquals(-1, $lipsum->lastIndexOf("z", $lipsum->length()));
 
     }
 
     public function testLength() {
 
-        $pizza = new Str("pizza");
-        $nullPizza = new Str();
-        $emptyPizza = new Str("");
+        $lipsum = new Str(self::LIPSUM);
+        $null = new Str();
+        $empty = new Str("");
 
-        $this->assertEquals(5, $pizza->length());
-        $this->assertEquals(0, $nullPizza->length());
-        $this->assertEquals(0, $emptyPizza->length());
+        $this->assertEquals(56, $lipsum->length());
+        $this->assertEquals(0, $null->length());
+        $this->assertEquals(0, $empty->length());
 
     }
 
     public function testMatches() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertTrue($pizza->matches("/[a-z]/"));
-        $this->assertFalse($pizza->matches("/[0-9]/"));
+        $this->assertTrue($lipsum->matches("/^[A-Z\.,\s]+$/i"));
+        $this->assertFalse($lipsum->matches("/^[0-9]+$/"));
 
     }
 
     public function testRegionMatches() {
 
-        $cheesePizza = new Str("chz pizza");
-        $pepperoniPizza = new Str("pep pizza");
+        $lipsum = new Str(self::LIPSUM);
+        $lipsumExtra = new Str(self::LIPSUM_EXTRA);
 
-        $this->assertTrue($cheesePizza->regionMatches(4, $pepperoniPizza, 4, 5));
-        $this->assertFalse($cheesePizza->regionMatches(0, $pepperoniPizza, 0, 3));
+        $this->assertTrue($lipsum->regionMatches(55, $lipsumExtra, 26, 1));
+        $this->assertFalse($lipsum->regionMatches(0, $lipsumExtra, 0, 5));
 
     }
 
     public function testRegionMatchesIgnoringCase() {
 
-        $cheesePizza = new Str("chz PIZZA");
-        $pepperoniPizza = new Str("PEP pizza");
+        $lipsum = new Str(self::LIPSUM);
+        $lipsumExtra = new Str(self::LIPSUM_EXTRA);
 
-        $this->assertTrue($cheesePizza->regionMatches(4, $pepperoniPizza, 4, 5, true));
-        $this->assertFalse($cheesePizza->regionMatches(0, $pepperoniPizza, 0, 3, true));
+        $this->assertTrue($lipsum->regionMatches(0, $lipsumExtra, 17, 1, true));
+        $this->assertFalse($lipsum->regionMatches(0, $lipsumExtra, 0, 5, true));
 
     }
 
     public function testReplace() {
 
-        $lie = new Str("pizza sucks");
-        $truth = $lie->replace("sucks", "is life");
+        $lipsum = new Str(self::LOREM_IPSUM);
+        $lipsum = $lipsum->replace("Lorem ipsum", "Lipsum");
 
-        $this->assertEquals("pizza is life", $truth);
+        $this->assertEquals("Lipsum", $lipsum);
 
     }
 
     public function testReplaceAll() {
 
-        $pizza = new Str("1 pizza 2 pizza 3 pizza");
-        $pizza = $pizza->replaceAll("/[0-9]\s/", "");
+        $lipsum = new Str(self::LOREM_IPSUM . " " . self::LOREM_IPSUM);
+        $lipsum = $lipsum->replaceAll("/Lorem ipsum/", "Lipsum");
 
-        $this->assertEquals("pizza pizza pizza", $pizza);
+        $this->assertEquals("Lipsum Lipsum", $lipsum);
 
     }
 
     public function testReplaceFirst() {
 
-        $pizza = new Str("pizza pizza");
-        $pizza = $pizza->replaceFirst("/\w+\s?/", "");
+        $lipsum = new Str(self::LOREM_IPSUM . " " . self::LOREM_IPSUM);
+        $lipsum = $lipsum->replaceFirst("/Lorem ipsum/", "Lipsum");
 
-        $this->assertEquals("pizza", $pizza);
+        $this->assertEquals("Lipsum Lorem ipsum", $lipsum);
 
     }
 
     public function testSplit() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
-        $pepperoniPizzaIngredients = new Str("crust, sauce, cheese, pepperoni");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(array("pepperoni", "pizza"), $pepperoniPizza->split("/ /"));
-        $this->assertEquals(array("crust", "sauce", "cheese", "pepperoni"), $pepperoniPizzaIngredients->split("/, /"));
+        $this->assertEquals(explode(" ", self::LIPSUM), $lipsum->split("/ /"));
 
     }
 
     public function testStartsWith() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertTrue($pizza->startsWith("p"));
-        $this->assertTrue($pizza->startsWith("pi"));
-        $this->assertFalse($pizza->startsWith("a"));
-        $this->assertFalse($pizza->startsWith("za"));
+        $this->assertTrue($lipsum->startsWith("L"));
+        $this->assertTrue($lipsum->startsWith("Lo"));
+        $this->assertFalse($lipsum->startsWith("."));
+        $this->assertFalse($lipsum->startsWith("t."));
 
     }
 
     public function testStartsWithFromIndex() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertTrue($pizza->startsWith("i", 1));
-        $this->assertTrue($pizza->startsWith("iz", 1));
-        $this->assertFalse($pizza->startsWith("a", 1));
-        $this->assertFalse($pizza->startsWith("za", 1));
+        $this->assertTrue($lipsum->startsWith("o", 1));
+        $this->assertTrue($lipsum->startsWith("or", 1));
+        $this->assertFalse($lipsum->startsWith(".", 1));
+        $this->assertFalse($lipsum->startsWith("t.", 1));
 
     }
 
     public function testStartsWithFromIndexLessThanZero() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
         $this->setExpectedException("OutOfBoundsException");
-        $pizza->startsWith("p", -1);
+        $lipsum->startsWith("L", -1);
 
     }
 
     public function testStartsWithFromIndexGreaterThanLength() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
         $this->setExpectedException("OutOfBoundsException");
-        $pizza->startsWith("p", $pizza->length() + 1);
+        $lipsum->startsWith("L", $lipsum->length() + 1);
 
     }
 
     public function testSubstringBeginIndexLessThanZero() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
         $this->setExpectedException("OutOfBoundsException");
-        $pepperoniPizza->substring(-1);
+        $lipsum->substring(-1);
 
     }
 
     public function testSubstringBeginIndexEqualsLength() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals("", $pepperoniPizza->substring($pepperoniPizza->length()));
+        $this->assertEquals("", $lipsum->substring($lipsum->length()));
 
     }
 
-    public function testSubstringBeginIndexGreaterThanLength() {
+    public function testSubstringNoEndIndexAndBeginIndexGreaterThanLength() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
         $this->setExpectedException("OutOfBoundsException");
-        $pepperoniPizza->substring($pepperoniPizza->length() + 1);
+        $lipsum->substring($lipsum->length() + 1);
 
     }
 
-    public function testSubstringBeginIndexEqualsZero() {
+    public function testSubstringNoEndIndexAndBeginIndexEqualsZero() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals("pepperoni pizza", $pepperoniPizza->substring(0));
-
-    }
-
-    public function testSubstringBeginIndexEqualsZeroElse() {
-
-        $pepperoniPizza = new Str("pepperoni pizza");
-
-        $this->assertEquals("epperoni pizza", $pepperoniPizza->substring(1));
+        $this->assertEquals(self::LIPSUM, $lipsum->substring(0));
 
     }
 
-    public function testSubstringEndIndexGreaterThanLength() {
+    public function testSubstringNoEndIndexAndBeginIndexNotEqualZero() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
+
+        $this->assertEquals("elit.", $lipsum->substring(51));
+
+    }
+
+    public function testSubstringEndIndexAndEndIndexGreaterThanLength() {
+
+        $lipsum = new Str(self::LIPSUM);
 
         $this->setExpectedException("OutOfBoundsException");
-        $pepperoniPizza->substring(0, $pepperoniPizza->length() + 1);
+        $lipsum->substring(0, $lipsum->length() + 1);
 
     }
 
-    public function testSubstringEndIndexLengthLessThanZero() {
+    public function testSubstringEndIndexAndLengthLessThanZero() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
         $this->setExpectedException("OutOfBoundsException");
-        $pepperoniPizza->substring(8, 4);
+        $lipsum->substring(1, 0);
 
     }
 
-    public function testSubstringBeginIndexEqualsZeroAndEndIndexEqualsLength() {
+    public function testSubstringEndIndexAndBeginIndexEqualsZeroAndEndIndexEqualsLength() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals("pepperoni pizza", $pepperoniPizza->substring(0, $pepperoniPizza->length()));
+        $this->assertEquals(self::LIPSUM, $lipsum->substring(0, $lipsum->length()));
 
     }
 
-    public function testSubstringBeginIndexEqualsZeroAndEndIndexEqualsLengthElse() {
+    public function testSubstringEndIndexAndBeginNotEqualZeroOrEndIndexNotEqualLength() {
 
-        $pepperoniPizza = new Str("pepperoni pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals("pizza", $pepperoniPizza->substring(10, $pepperoniPizza->length()));
+        $this->assertEquals("elit.", $lipsum->substring(51, $lipsum->length()));
 
     }
 
     public function testToCharArray() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(array("p", "i", "z", "z", "a"), $pizza->toCharArray());
+        $this->assertEquals(str_split(self::LIPSUM), $lipsum->toCharArray());
 
     }
 
     public function testToLowerCase() {
 
-        $pizza = new Str("PIZZA");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals("pizza", $pizza->toLowerCase());
+        $this->assertEquals(strtolower(self::LIPSUM), $lipsum->toLowerCase());
 
     }
 
     public function testToUpperCase() {
 
-        $pizza = new Str("pizza");
+        $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals("PIZZA", $pizza->toUpperCase());
+        $this->assertEquals(strtoupper(self::LIPSUM), $lipsum->toUpperCase());
 
     }
 
     public function testTrim() {
 
-        $pizza = new Str(" pizza ");
+        $lipsum = new Str(" " . self::LIPSUM . " ");
 
-        $this->assertEquals("pizza", $pizza->trim());
+        $this->assertEquals(self::LIPSUM, $lipsum->trim());
 
     }
 

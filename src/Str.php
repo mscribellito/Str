@@ -89,8 +89,8 @@ class Str implements ArrayAccess {
             $value = substr($value, $offset, $count);
         }
 
-        $this->value = strlen($value);
-        $this->length = $length;
+        $this->length = strlen($value);
+        $this->value = $value;
 
     }
 

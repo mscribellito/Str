@@ -319,7 +319,7 @@ class StrTest extends \PHPUnit_Framework_TestCase {
 
         $lipsum = new Str(self::LIPSUM);
 
-        $this->assertEquals(-1, $lipsum->lastIndexOf(".", -1));
+        $this->assertEquals(-1, $lipsum->lastIndexOf("z", -1));
 
     }
 

@@ -1,5 +1,12 @@
-Str
-===
+```
+   _____  _         
+  / ____|| |        
+ | (___  | |_  _ __ 
+  \___ \ | __|| '__|
+  ____) || |_ | |   
+ |_____/  \__||_|   
+
+```
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/mscribellito/str.svg?style=flat-square)](https://packagist.org/packages/mscribellito/str)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)

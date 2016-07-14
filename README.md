@@ -46,6 +46,11 @@ if ($lipsum->contains($search)) {
 }
 ```
 
+You can also create an instance of Str via a convenient, helper function:
+```php
+$lipsum = Str("Lorem ipsum dolor sit amet");
+```
+
 Chaining
 --------
 

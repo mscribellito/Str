@@ -98,6 +98,11 @@ Modifier and Type | Method and Description
 `Str` | `toUpperCase()`<br>Converts all of the characters in this string to upper case.
 `Str` | `trim([string $characterMask=" \t\n\r\0\x0B"])`<br>Returns a string whose value is this string, with any leading and trailing whitespace removed.
 
+Testing
+-------
+
+Run tests with `vendor/bin/phpunit`
+
 License
 -------
 Released under the [MIT License](https://opensource.org/licenses/MIT). See [LICENSE](LICENSE) for details.

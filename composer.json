@@ -1,7 +1,7 @@
 {
     "name": "mscribellito/str",
     "type": "library",
-    "description": "Str is a PHP library that provides convenient, object-oriented operations for string handling and manipulation.",
+    "description": "Str is a PHP class that provides convenient, object-oriented operations for string handling and manipulation.",
     "keywords": ["string", "str"],
     "homepage": "https://github.com/mscribellito/Str",
     "license": "MIT",

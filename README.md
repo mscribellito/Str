@@ -1,7 +1,7 @@
 ```
    _____  _         
   / ____|| |        
- | (___  | |_  _ __ 
+ | (___  | |_  _ __
   \___ \ | __|| '__|
   ____) || |_ | |   
  |_____/  \__||_|   
@@ -15,7 +15,7 @@
 What is Str?
 ------------
 
-**Str** is a PHP library that provides convenient, object-oriented operations for string handling and manipulation. Str provides methods for examining individual characters of the string, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. A Str is immutable (constant) and its value cannot be changed after creation.
+**Str** is a PHP class that provides convenient, object-oriented operations for string handling and manipulation. Str provides methods for examining individual characters of the string, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. A Str is immutable (constant) and its value cannot be changed after creation.
 
 Requirements
 ------------
@@ -83,7 +83,7 @@ Modifier and Type | Method and Description
 `bool` | `contains(string $str)`<br>Returns true if and only if this string contains the specified string.
 `bool` | `endsWith(string $suffix)`<br>Tests if this string ends with the specified suffix.
 `bool` | `equals(string $str)`<br>Compares this string to the specified string.
-`bool` | `equalsIgnoreCase(string $str)`<br>Compares this string to the specified string, ignoring case considerations. 
+`bool` | `equalsIgnoreCase(string $str)`<br>Compares this string to the specified string, ignoring case considerations.
 `static` `Str` | `format(string $format)`<br>Returns a formatted string using the specified format string and arguments.
 `int` | `indexOf(string $str, [int $fromIndex=0])`<br>Returns the index within this string of the first occurrence of the specified string, optionally starting the search at the specified index.
 `bool` | `isEmpty()`<br>Returns true if and only if `length()` is 0.

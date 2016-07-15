@@ -28,18 +28,18 @@
 
 namespace mscribellito;
 
-use ArrayAccess,
-    Exception,
-    OutOfBoundsException;
+use ArrayAccess;
+use Exception;
+use OutOfBoundsException;
 
 /**
  * Str
  *
  * Str is a PHP library that provides convenient, object-oriented operations for
- * string handling and manipulation. Str provides methods for examining 
- * individual characters of the string, for comparing strings, for searching 
- * strings, for extracting substrings, and for creating a copy of a string with 
- * all characters translated to uppercase or to lowercase. A Str is immutable 
+ * string handling and manipulation. Str provides methods for examining
+ * individual characters of the string, for comparing strings, for searching
+ * strings, for extracting substrings, and for creating a copy of a string with
+ * all characters translated to uppercase or to lowercase. A Str is immutable
  * (constant) and its value cannot be changed after creation.
  *
  * @author Michael Scribellito <mscribellito@gmail.com>
@@ -63,8 +63,8 @@ class Str implements ArrayAccess {
     protected $value = "";
 
     /**
-     * Instantiates a new Str that contains characters from a string. The offset 
-     * argument is the index of the first character of the string and the count 
+     * Instantiates a new Str that contains characters from a string. The offset
+     * argument is the index of the first character of the string and the count
      * argument specifies the length of the string.
      *
      * @param mixed $original a string
@@ -177,7 +177,7 @@ class Str implements ArrayAccess {
             $value .= (string) func_get_arg($i);
         }
 
-        return new self($value);
+        return new static($value);
 
     }
 
@@ -219,7 +219,7 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Compares this string to the specified string, ignoring case considerations. 
+     * Compares this string to the specified string, ignoring case considerations.
      *
      * @param string $str the string to compare this string against
      * @return bool true if the specified string is equivalent to this string,
@@ -241,10 +241,10 @@ class Str implements ArrayAccess {
     public static function format($format) {
 
         if (func_num_args() === 1) {
-            return new self($format);
+            return new static($format);
         }
 
-        return new self(call_user_func_array("sprintf", func_get_args()));
+        return new static(call_user_func_array("sprintf", func_get_args()));
 
     }
 
@@ -291,7 +291,7 @@ class Str implements ArrayAccess {
      */
     public static function join($delimiter, $elements) {
 
-        return new self(implode($delimiter, $elements));
+        return new static(implode($delimiter, $elements));
 
     }
 
@@ -411,7 +411,7 @@ class Str implements ArrayAccess {
      */
     public function regionMatches($toffset, $str, $ooffset, $length, $ignoreCase = false) {
 
-        $other = new self($str);
+        $other = new static($str);
 
         if ($ignoreCase === true) {
             return strncasecmp($this->substring($toffset), $other->substring($ooffset), $length) === 0;
@@ -431,7 +431,7 @@ class Str implements ArrayAccess {
      */
     public function replace($target, $replacement) {
 
-        return new self(str_replace($target, $replacement, $this->value));
+        return new static(str_replace($target, $replacement, $this->value));
 
     }
 
@@ -445,7 +445,7 @@ class Str implements ArrayAccess {
      */
     public function replaceAll($regex, $replacement) {
 
-        return new self(preg_replace($regex, $replacement, $this->value));
+        return new static(preg_replace($regex, $replacement, $this->value));
 
     }
 
@@ -459,7 +459,7 @@ class Str implements ArrayAccess {
      */
     public function replaceFirst($regex, $replacement) {
 
-        return new self(preg_replace($regex, $replacement, $this->value, 1));
+        return new static(preg_replace($regex, $replacement, $this->value, 1));
 
     }
 
@@ -480,7 +480,7 @@ class Str implements ArrayAccess {
         $parts = preg_split($regex, $this->value, $limit);
 
         for ($i = 0, $l = count($parts); $i < $l; $i++) {
-            $parts[$i] = new self($parts[$i]);
+            $parts[$i] = new static($parts[$i]);
         }
 
         return $parts;
@@ -488,7 +488,7 @@ class Str implements ArrayAccess {
     }
 
     /**
-     * Tests if this string starts with the specified prefix, optionally starting 
+     * Tests if this string starts with the specified prefix, optionally starting
      * the search at the specified index.
      *
      * @param string $prefix the prefix
@@ -515,7 +515,7 @@ class Str implements ArrayAccess {
         if ($beginIndex < 0) {
             throw new OutOfBoundsException($beginIndex);
         } else if ($beginIndex === $this->length) {
-            return new self("");
+            return new static("");
         }
 
         if ($endIndex === null) {
@@ -526,7 +526,7 @@ class Str implements ArrayAccess {
             if ($beginIndex === 0) {
                 return $this;
             } else {
-                return new self($this->value, $beginIndex, $length);
+                return new static($this->value, $beginIndex, $length);
             }
         } else {
             if ($endIndex > $this->length) {
@@ -539,7 +539,7 @@ class Str implements ArrayAccess {
             if ($beginIndex === 0 && $endIndex === $this->length) {
                 return $this;
             } else {
-                return new self($this->value, $beginIndex, $length);
+                return new static($this->value, $beginIndex, $length);
             }
         }
 
@@ -565,7 +565,7 @@ class Str implements ArrayAccess {
      */
     public function toLowerCase() {
 
-        return new self(strtolower($this->value));
+        return new static(strtolower($this->value));
 
     }
 
@@ -576,7 +576,7 @@ class Str implements ArrayAccess {
      */
     public function toUpperCase() {
 
-        return new self(strtoupper($this->value));
+        return new static(strtoupper($this->value));
 
     }
 
@@ -591,7 +591,7 @@ class Str implements ArrayAccess {
      */
     public function trim($characterMask = " \t\n\r\0\x0B") {
 
-        return new self(trim($this->value, $characterMask));
+        return new static(trim($this->value, $characterMask));
 
     }
 

@@ -2,9 +2,9 @@
 
 namespace mscribellito;
 
-require __DIR__ . "/../src/Str.php";
+use PHPUnit_Framework_TestCase;
 
-class StrTest extends \PHPUnit_Framework_TestCase {
+class StrTest extends PHPUnit_Framework_TestCase {
 
     const LIPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
     const LIPSUM_EXTRA = "Donec sed vestibulum massa.";

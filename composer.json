@@ -5,14 +5,12 @@
     "keywords": ["string", "str"],
     "homepage": "https://github.com/mscribellito/Str",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Michael Scribellito",
-            "email": "mscribellito@gmail.com",
-            "homepage": "http://mscribellito.com",
-            "role": "Developer"
-        }
-    ],
+    "authors": [{
+        "name": "Michael Scribellito",
+        "email": "mscribellito@gmail.com",
+        "homepage": "http://mscribellito.com",
+        "role": "Developer"
+    }],
     "require": {
         "php": ">=5.3.0"
     },

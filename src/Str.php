@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Str
+ * Str.
  *
  * This content is released under the The MIT License (MIT)
  *
@@ -25,7 +25,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 namespace mscribellito;
 
 use ArrayAccess;
@@ -33,7 +32,7 @@ use Exception;
 use OutOfBoundsException;
 
 /**
- * Str
+ * Str.
  *
  * Str is a PHP class that provides convenient, object-oriented operations for
  * string handling and manipulation. Str provides methods for examining
@@ -44,23 +43,24 @@ use OutOfBoundsException;
  *
  * @author Michael Scribellito <mscribellito@gmail.com>
  * @copyright (c) 2016, Michael Scribellito
+ *
  * @link https://github.com/mscribellito/Str
  */
-class Str implements ArrayAccess {
-
+class Str implements ArrayAccess
+{
     /**
-     * Length of the string
+     * Length of the string.
      *
      * @var int
      */
     protected $length = 0;
 
     /**
-     * Value of the string
+     * Value of the string.
      *
      * @var string
      */
-    protected $value = "";
+    protected $value = '';
 
     /**
      * Instantiates a new Str that contains characters from a string. The offset
@@ -68,12 +68,13 @@ class Str implements ArrayAccess {
      * argument specifies the length of the string.
      *
      * @param mixed $original a string
-     * @param int $offset the initial offset
-     * @param int $count the length
+     * @param int   $offset   the initial offset
+     * @param int   $count    the length
+     *
      * @throws OutOfBoundsException
      */
-    public function __construct($original = "", $offset = null, $count = null) {
-
+    public function __construct($original = '', $offset = null, $count = null)
+    {
         $value = (string) $original;
         $length = strlen($value);
 
@@ -92,7 +93,6 @@ class Str implements ArrayAccess {
 
         $this->length = strlen($value);
         $this->value = $value;
-
     }
 
     /**
@@ -100,165 +100,166 @@ class Str implements ArrayAccess {
      *
      * @return string the string itself.
      */
-    public function __toString() {
-
+    public function __toString()
+    {
         return $this->value;
-
     }
 
     /**
      * Returns the character at the specified index.
      *
      * @param int $index the index of the character
+     *
      * @return string the character at the specified index of this string.
+     *
      * @throws OutOfBoundsException
      */
-    public function charAt($index) {
-
+    public function charAt($index)
+    {
         if ($index < 0 || $index >= $this->length) {
             throw new OutOfBoundsException($index);
         }
 
         return $this->value[$index];
-
     }
 
     /**
      * Returns the character ASCII value at the specified index.
      *
      * @param int $index the index to the character
+     *
      * @return int the ASCII value of the character at the index.
+     *
      * @throws OutOfBoundsException
      */
-    public function charCodeAt($index) {
-
+    public function charCodeAt($index)
+    {
         return ord($this->charAt($index));
-
     }
 
     /**
      * Compares two strings lexicographically.
      *
      * @param string $str the string to be compared
+     *
      * @return int a negative integer, zero, or a positive integer as the specified
-     * string is greater than, equal to, or less than this string.
+     *             string is greater than, equal to, or less than this string.
      */
-    public function compareTo($str) {
-
+    public function compareTo($str)
+    {
         return strcmp($this->value, (string) $str);
-
     }
 
     /**
      * Compares two strings lexicographically, ignoring case differences.
      *
      * @param string $str the string to be compared
+     *
      * @return int a negative integer, zero, or a positive integer as the specified
-     * string is greater than, equal to, or less than this string.
+     *             string is greater than, equal to, or less than this string.
      */
-    public function compareToIgnoreCase($str) {
-
+    public function compareToIgnoreCase($str)
+    {
         return strcasecmp($this->value, (string) $str);
-
     }
 
     /**
      * Concatenates the specified string(s) to the end of this string.
      *
      * @return \Str a string that represents the concatenation of this string
-     * followed by the string argument(s).
+     *              followed by the string argument(s).
      */
-    public function concat() {
-
+    public function concat()
+    {
         $value = $this->value;
         $count = func_num_args();
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $value .= (string) func_get_arg($i);
         }
 
         return new static($value);
-
     }
 
     /**
      * Returns true if and only if this string contains the specified string.
      *
      * @param string $str the string to search for
+     *
      * @return bool true if this string contains str, false otherwise.
      */
-    public function contains($str) {
-
+    public function contains($str)
+    {
         return $this->indexOf($str) >= 0;
-
     }
 
     /**
      * Tests if this string ends with the specified suffix.
      *
      * @param string $suffix the suffix
+     *
      * @return bool true if the string ends with the specified suffix.
      */
-    public function endsWith($suffix) {
-
-        return $this->matches("/" . preg_quote($suffix) . "$/");
-
+    public function endsWith($suffix)
+    {
+        return $this->matches('/'.preg_quote($suffix).'$/');
     }
 
     /**
      * Compares this string to the specified string.
      *
      * @param string $str the string to compare this string against
+     *
      * @return bool true if the specified string is equivalent to this string,
-     * false otherwise.
+     *              false otherwise.
      */
-    public function equals($str) {
-
+    public function equals($str)
+    {
         return $this->compareTo($str) === 0;
-
     }
 
     /**
      * Compares this string to the specified string, ignoring case considerations.
      *
      * @param string $str the string to compare this string against
+     *
      * @return bool true if the specified string is equivalent to this string,
-     * false otherwise.
+     *              false otherwise.
      */
-    public function equalsIgnoreCase($str) {
-
+    public function equalsIgnoreCase($str)
+    {
         return $this->compareToIgnoreCase($str) === 0;
-
     }
 
     /**
      * Returns a formatted string using the specified format string and arguments.
      *
      * @param string $format a format string
-     * @param mixed $args arguments referenced by the format specifiers in the format string.
+     * @param mixed  $args   arguments referenced by the format specifiers in the format string.
+     *
      * @return \Str a formatted string.
      */
-    public static function format($format) {
-
+    public static function format($format)
+    {
         if (func_num_args() === 1) {
             return new static($format);
         }
 
-        return new static(call_user_func_array("sprintf", func_get_args()));
-
+        return new static(call_user_func_array('sprintf', func_get_args()));
     }
 
     /**
      * Returns the index within this string of the first occurrence of the specified
      * string, optionally starting the search at the specified index.
      *
-     * @param string $str a string
-     * @param int $fromIndex the index to start the search from
+     * @param string $str       a string
+     * @param int    $fromIndex the index to start the search from
+     *
      * @return int the index of the first occurrence of the string, or -1 if the
-     * string does not occur.
+     *             string does not occur.
      */
-    public function indexOf($str, $fromIndex = 0) {
-
+    public function indexOf($str, $fromIndex = 0)
+    {
         if ($fromIndex < 0 || $fromIndex >= $this->length) {
             return -1;
         }
@@ -266,7 +267,6 @@ class Str implements ArrayAccess {
         $index = strpos($this->value, (string) $str, $fromIndex);
 
         return $index === false ? -1 : $index;
-
     }
 
     /**
@@ -274,48 +274,47 @@ class Str implements ArrayAccess {
      *
      * @return bool true if length() is 0, otherwise false.
      */
-    public function isEmpty() {
-
+    public function isEmpty()
+    {
         return $this->length === 0;
-
     }
 
     /**
      * Returns a new string composed of array elements joined together with the
      * specified delimiter.
      *
-     * @param string $delimiter the delimiter that separates each element
-     * @param mixed[] $elements the elements to join together
+     * @param string  $delimiter the delimiter that separates each element
+     * @param mixed[] $elements  the elements to join together
+     *
      * @return \Str a new string that is composed of the elements separated
-     * by the delimiter.
+     *              by the delimiter.
      */
-    public static function join($delimiter, $elements) {
-
+    public static function join($delimiter, $elements)
+    {
         return new static(implode($delimiter, $elements));
-
     }
 
     /**
      * Returns the index within this string of the last occurrence of the specified
      * character, optionally starting the search at the specified index.
      *
-     * @param string $str a string
-     * @param int $fromIndex the index to start the search from
+     * @param string $str       a string
+     * @param int    $fromIndex the index to start the search from
+     *
      * @return int the index of the last occurrence of the string, or -1 if the
-     * string does not occur.
+     *             string does not occur.
      */
-    public function lastIndexOf($str, $fromIndex = 0) {
-
+    public function lastIndexOf($str, $fromIndex = 0)
+    {
         if ($fromIndex < 0 || $fromIndex >= $this->length) {
             return -1;
-        } else if ($fromIndex !== 0) {
+        } elseif ($fromIndex !== 0) {
             $fromIndex = -1 * $fromIndex;
         }
 
         $index = strrpos($this->value, (string) $str, $fromIndex);
 
         return $index === false ? -1 : $index;
-
     }
 
     /**
@@ -323,24 +322,23 @@ class Str implements ArrayAccess {
      *
      * @return int the length of the string.
      */
-    public function length() {
-
+    public function length()
+    {
         return $this->length;
-
     }
 
     /**
      * Tells whether or not this string matches the given regular expression.
      *
      * @param string $regex the regular expression to which this string is to be matched
+     *
      * @return bool true if and only if this string matches the given regular expression.
      */
-    public function matches($regex) {
-
+    public function matches($regex)
+    {
         $match = preg_match($regex, $this->value);
 
         return $match === 1;
-
     }
 
     /**
@@ -348,12 +346,12 @@ class Str implements ArrayAccess {
      * Implements part of the ArrayAccess interface.
      *
      * @param int $offset the index
+     *
      * @return bool true if character exists at the specified index.
      */
-    public function offsetExists($offset) {
-
+    public function offsetExists($offset)
+    {
         return $offset >= 0 && $this->length > $offset;
-
     }
 
     /**
@@ -361,13 +359,28 @@ class Str implements ArrayAccess {
      * ArrayAccess interface.
      *
      * @param int $offset the index
+     *
      * @return string the character at the specified index.
+     *
      * @throws OutOfBoundsException
      */
-    public function offsetGet($offset) {
-
+    public function offsetGet($offset)
+    {
         return $this->charAt($offset);
+    }
 
+    /**
+     * Implements part of the ArrayAccess interface. Throws an exception because
+     * Strings are immutable.
+     *
+     * @param int    $offset n/a
+     * @param string $value  n/a
+     *
+     * @throws Exception
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new Exception('Strings are immutable');
     }
 
     /**
@@ -375,42 +388,30 @@ class Str implements ArrayAccess {
      * Strings are immutable.
      *
      * @param int $offset n/a
-     * @param string $value n/a
-     * @throws Exception
-     */
-    public function offsetSet($offset, $value) {
-
-        throw new Exception("Strings are immutable");
-
-    }
-
-    /**
-     * Implements part of the ArrayAccess interface. Throws an exception because
-     * Strings are immutable.
      *
-     * @param int $offset n/a
      * @throws Exception
      */
-    public function offsetUnset($offset) {
-
-        throw new Exception("Strings are immutable");
-
+    public function offsetUnset($offset)
+    {
+        throw new Exception('Strings are immutable');
     }
 
     /**
      * Tests if two string regions are equal.
      *
-     * @param int $toffset the starting offset of the subregion in this string
-     * @param string $str the string argument
-     * @param int $ooffset the starting offset of the subregion in the string argument
-     * @param int $length the number of characters to compare
-     * @param bool $ignoreCase if true, ignore case
+     * @param int    $toffset    the starting offset of the subregion in this string
+     * @param string $str        the string argument
+     * @param int    $ooffset    the starting offset of the subregion in the string argument
+     * @param int    $length     the number of characters to compare
+     * @param bool   $ignoreCase if true, ignore case
+     *
      * @return bool true if the specified subregion of this string matches the
-     * specified subregion of the string argument; false otherwise.
+     *              specified subregion of the string argument; false otherwise.
+     *
      * @throws OutOfBoundsException
      */
-    public function regionMatches($toffset, $str, $ooffset, $length, $ignoreCase = false) {
-
+    public function regionMatches($toffset, $str, $ooffset, $length, $ignoreCase = false)
+    {
         $other = new static($str);
 
         if ($ignoreCase === true) {
@@ -418,104 +419,106 @@ class Str implements ArrayAccess {
         }
 
         return strncmp($this->substring($toffset), $other->substring($ooffset), $length) === 0;
-
     }
 
     /**
      * Returns a string resulting from replacing all occurrences of target in this
      * string with replacement.
      *
-     * @param string $target the string to be replaced
+     * @param string $target      the string to be replaced
      * @param string $replacement the replacement string
+     *
      * @return \Str the resulting string.
      */
-    public function replace($target, $replacement) {
-
+    public function replace($target, $replacement)
+    {
         return new static(str_replace($target, $replacement, $this->value));
-
     }
 
     /**
      * Replaces each substring of this string that matches the given regular
      * expression with the given replacement.
      *
-     * @param string $regex the regular expression to which this string is to be matched
+     * @param string $regex       the regular expression to which this string is to be matched
      * @param string $replacement the string to be substituted for each match
+     *
      * @return \Str the resulting string.
      */
-    public function replaceAll($regex, $replacement) {
-
+    public function replaceAll($regex, $replacement)
+    {
         return new static(preg_replace($regex, $replacement, $this->value));
-
     }
 
     /**
      * Replaces the first substring of this string that matches the given regular
      * expression with the given replacement.
      *
-     * @param string $regex the regular expression to which this string is to be matched
+     * @param string $regex       the regular expression to which this string is to be matched
      * @param string $replacement the string to be substituted for each match
+     *
      * @return \Str the resulting string.
      */
-    public function replaceFirst($regex, $replacement) {
-
+    public function replaceFirst($regex, $replacement)
+    {
         return new static(preg_replace($regex, $replacement, $this->value, 1));
-
     }
 
     /**
      * Splits this string around matches of the given regular expression.
      *
      * @param string $regex the delimiting regular expression
-     * @param int $limit the result threshold
+     * @param int    $limit the result threshold
+     *
      * @return \Str[] the array of strings computed by splitting this string around
-     * matches of the given regular expression.
+     *                matches of the given regular expression.
      */
-    public function split($regex, $limit = null) {
-
+    public function split($regex, $limit = null)
+    {
         if ($limit === null) {
             $limit = -1;
         }
 
         $parts = preg_split($regex, $this->value, $limit);
 
-        for ($i = 0, $l = count($parts); $i < $l; $i++) {
+        for ($i = 0, $l = count($parts); $i < $l; ++$i) {
             $parts[$i] = new static($parts[$i]);
         }
 
         return $parts;
-
     }
 
     /**
      * Tests if this string starts with the specified prefix, optionally starting
      * the search at the specified index.
      *
-     * @param string $prefix the prefix
-     * @param int $toffset the index to start the search from
+     * @param string $prefix  the prefix
+     * @param int    $toffset the index to start the search from
+     *
      * @return bool true if the string starts with the specified prefix.
+     *
      * @throws OutOfBoundsException
      */
-    public function startsWith($prefix, $toffset = 0) {
-
-        return $this->substring($toffset)->matches("/^" . preg_quote($prefix) . "/");
-
+    public function startsWith($prefix, $toffset = 0)
+    {
+        return $this->substring($toffset)->matches('/^'.preg_quote($prefix).'/');
     }
 
     /**
      * Returns a string that is a substring of this string.
      *
      * @param int $beginIndex the beginning index, inclusive
-     * @param int $endIndex the ending index, exclusive
+     * @param int $endIndex   the ending index, exclusive
+     *
      * @return \Str the specified substring.
+     *
      * @throws OutOfBoundsException
      */
-    public function substring($beginIndex, $endIndex = null) {
-
+    public function substring($beginIndex, $endIndex = null)
+    {
         if ($beginIndex < 0) {
             throw new OutOfBoundsException($beginIndex);
-        } else if ($beginIndex === $this->length) {
-            return new static("");
+        } elseif ($beginIndex === $this->length) {
+            return new static('');
         }
 
         if ($endIndex === null) {
@@ -542,20 +545,18 @@ class Str implements ArrayAccess {
                 return new static($this->value, $beginIndex, $length);
             }
         }
-
     }
 
     /**
      * Converts this string to a new character array.
      *
      * @return string[] a character array whose length is the length of this string
-     * and whose contents are initialized to contain the character sequence
-     * represented by this string.
+     *                  and whose contents are initialized to contain the character sequence
+     *                  represented by this string.
      */
-    public function toCharArray() {
-
+    public function toCharArray()
+    {
         return str_split($this->value, 1);
-
     }
 
     /**
@@ -563,10 +564,9 @@ class Str implements ArrayAccess {
      *
      * @return \Str the string, converted to lowercase.
      */
-    public function toLowerCase() {
-
+    public function toLowerCase()
+    {
         return new static(strtolower($this->value));
-
     }
 
     /**
@@ -574,10 +574,9 @@ class Str implements ArrayAccess {
      *
      * @return \Str the string, converted to uppercase.
      */
-    public function toUpperCase() {
-
+    public function toUpperCase()
+    {
         return new static(strtoupper($this->value));
-
     }
 
     /**
@@ -585,14 +584,13 @@ class Str implements ArrayAccess {
      * whitespace removed.
      *
      * @param string $characterMask characters to strip
+     *
      * @return \Str a string whose value is this string, with any leading and
-     * trailing white space removed, or this string if it has no leading or trailing
-     * white space.
+     *              trailing white space removed, or this string if it has no leading or trailing
+     *              white space.
      */
-    public function trim($characterMask = " \t\n\r\0\x0B") {
-
+    public function trim($characterMask = " \t\n\r\0\x0B")
+    {
         return new static(trim($this->value, $characterMask));
-
     }
-
 }

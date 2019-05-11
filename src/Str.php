@@ -34,12 +34,12 @@ use OutOfBoundsException;
 /**
  * Str.
  *
- * Str is a PHP class that provides convenient, object-oriented operations for
- * string handling and manipulation. Str provides methods for examining
- * individual characters of the string, for comparing strings, for searching
- * strings, for extracting substrings, and for creating a copy of a string with
- * all characters translated to uppercase or to lowercase. A Str is immutable
- * (constant) and its value cannot be changed after creation.
+ * Str is an immutable PHP class that provides convenient, object-oriented
+ * operations for string handling and manipulation. Str provides methods for
+ * examining individual characters of the string, for comparing strings, for
+ * searching strings, for extracting substrings, and for creating a copy of a
+ * string with all characters translated to uppercase or to lowercase. A Str is
+ * immutable (constant) and its value cannot be changed after creation.
  *
  * @author Michael Scribellito <mscribellito@gmail.com>
  * @copyright (c) 2016, Michael Scribellito
@@ -73,7 +73,7 @@ class Str implements ArrayAccess
      *
      * @throws OutOfBoundsException
      */
-    public function __construct($original = '', $offset = null, $count = null)
+    public function __construct($original = '', int $offset = null, int $count = null)
     {
         $value = (string) $original;
         $length = strlen($value);
@@ -95,6 +95,12 @@ class Str implements ArrayAccess
         $this->value = $value;
     }
 
+    public function __destruct()
+    {
+        $this->length = 0;
+        $this->value = null;
+    }
+
     /**
      * The value of this string is returned.
      *
@@ -114,7 +120,7 @@ class Str implements ArrayAccess
      *
      * @throws OutOfBoundsException
      */
-    public function charAt($index)
+    public function charAt(int $index)
     {
         if ($index < 0 || $index >= $this->length) {
             throw new OutOfBoundsException($index);
@@ -132,7 +138,7 @@ class Str implements ArrayAccess
      *
      * @throws OutOfBoundsException
      */
-    public function charCodeAt($index)
+    public function charCodeAt(int $index)
     {
         return ord($this->charAt($index));
     }
@@ -258,7 +264,7 @@ class Str implements ArrayAccess
      * @return int the index of the first occurrence of the string, or -1 if the
      *             string does not occur.
      */
-    public function indexOf($str, $fromIndex = 0)
+    public function indexOf($str, int $fromIndex = 0)
     {
         if ($fromIndex < 0 || $fromIndex >= $this->length) {
             return -1;
@@ -304,7 +310,7 @@ class Str implements ArrayAccess
      * @return int the index of the last occurrence of the string, or -1 if the
      *             string does not occur.
      */
-    public function lastIndexOf($str, $fromIndex = 0)
+    public function lastIndexOf($str, int $fromIndex = 0)
     {
         if ($fromIndex < 0 || $fromIndex >= $this->length) {
             return -1;
@@ -410,7 +416,7 @@ class Str implements ArrayAccess
      *
      * @throws OutOfBoundsException
      */
-    public function regionMatches($toffset, $str, $ooffset, $length, $ignoreCase = false)
+    public function regionMatches($toffset, $str, int $ooffset, int $length, bool $ignoreCase = false)
     {
         $other = new static($str);
 
@@ -472,7 +478,7 @@ class Str implements ArrayAccess
      * @return \Str[] the array of strings computed by splitting this string around
      *                matches of the given regular expression.
      */
-    public function split($regex, $limit = null)
+    public function split($regex, int $limit = null)
     {
         if ($limit === null) {
             $limit = -1;
@@ -498,7 +504,7 @@ class Str implements ArrayAccess
      *
      * @throws OutOfBoundsException
      */
-    public function startsWith($prefix, $toffset = 0)
+    public function startsWith($prefix, int $toffset = 0)
     {
         return $this->substring($toffset)->matches('/^'.preg_quote($prefix).'/');
     }
@@ -513,7 +519,7 @@ class Str implements ArrayAccess
      *
      * @throws OutOfBoundsException
      */
-    public function substring($beginIndex, $endIndex = null)
+    public function substring($beginIndex, int $endIndex = null)
     {
         if ($beginIndex < 0) {
             throw new OutOfBoundsException($beginIndex);

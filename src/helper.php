@@ -12,8 +12,8 @@ if (!function_exists('Str')) {
    *
    * @throws OutOfBoundsException
    */
-  function Str($original = '', $offset = null, $count = null)
-  {
-      return new Str($original, $offset, $count);
-  }
+    function Str($original = '', $offset = null, $count = null)
+    {
+        return new Str($original, $offset, $count);
+    }
 }

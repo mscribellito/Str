@@ -2,9 +2,12 @@
 
 namespace mscribellito;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use ArrayAccess;
+use Exception;
+use OutOfBoundsException;
 
-class StrTest extends PHPUnit_Framework_TestCase
+class StrTest extends TestCase
 {
     const LIPSUM = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
     const LIPSUM_EXTRA = 'Donec sed vestibulum massa.';
@@ -30,19 +33,19 @@ class StrTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorWithOffsetLessThanZero()
     {
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         new Str(self::LIPSUM, -1, 0);
     }
 
     public function testConstructorWithLengthLessThanZero()
     {
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         new Str(self::LIPSUM, 0, -1);
     }
 
     public function testConstructorWithOffsetGreaterThanLength()
     {
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         new Str(self::LIPSUM, 57, 0);
     }
 
@@ -65,7 +68,7 @@ class StrTest extends PHPUnit_Framework_TestCase
         $this->assertNotEquals('O', $lipsum->charAt(1));
         $this->assertEquals('.', $lipsum->charAt($lipsum->length() - 1));
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $lipsum->charAt(-1);
         $lipsum->charAt($lipsum->length());
     }
@@ -78,7 +81,7 @@ class StrTest extends PHPUnit_Framework_TestCase
         $this->assertNotEquals(ord('O'), $lipsum->charCodeAt(1));
         $this->assertEquals(ord('.'), $lipsum->charCodeAt($lipsum->length() - 1));
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $lipsum->charCodeAt(-1);
         $lipsum->charCodeAt($lipsum->length());
     }
@@ -244,7 +247,7 @@ class StrTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('L', $lipsum[0]);
         $this->assertEquals('.', $lipsum[55]);
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $this->assertEquals(null, $lipsum[-1]);
     }
 
@@ -252,7 +255,7 @@ class StrTest extends PHPUnit_Framework_TestCase
     {
         $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('Exception');
+        $this->expectException(Exception::class);
         $lipsum[0] = ' ';
     }
 
@@ -260,7 +263,7 @@ class StrTest extends PHPUnit_Framework_TestCase
     {
         $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('Exception');
+        $this->expectException(Exception::class);
         unset($lipsum[0]);
     }
 
@@ -399,7 +402,7 @@ class StrTest extends PHPUnit_Framework_TestCase
     {
         $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $lipsum->startsWith('L', -1);
     }
 
@@ -407,7 +410,7 @@ class StrTest extends PHPUnit_Framework_TestCase
     {
         $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $lipsum->startsWith('L', $lipsum->length() + 1);
     }
 
@@ -415,7 +418,7 @@ class StrTest extends PHPUnit_Framework_TestCase
     {
         $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $lipsum->substring(-1);
     }
 
@@ -430,7 +433,7 @@ class StrTest extends PHPUnit_Framework_TestCase
     {
         $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $lipsum->substring($lipsum->length() + 1);
     }
 
@@ -452,7 +455,7 @@ class StrTest extends PHPUnit_Framework_TestCase
     {
         $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $lipsum->substring(0, $lipsum->length() + 1);
     }
 
@@ -460,7 +463,7 @@ class StrTest extends PHPUnit_Framework_TestCase
     {
         $lipsum = new Str(self::LIPSUM);
 
-        $this->setExpectedException('OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
         $lipsum->substring(1, 0);
     }
 
